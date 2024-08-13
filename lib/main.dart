@@ -1,18 +1,7 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:phone_book/page/testPage.dart';
 
-/// This sample app shows an app with two screens.
-///
-/// The first route '/' is mapped to [HomeScreen], and the second route
-/// '/details' is mapped to [DetailsScreen].
-///
-/// The buttons use context.go() to navigate to each destination. On mobile
-/// devices, each destination is deep-linkable and on the web, can be navigated
-/// to using the address bar.
 void main() => runApp(const MyApp());
 
 /// The route configuration.
@@ -29,6 +18,20 @@ final GoRouter _router = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return const DetailsScreen();
           },
+        ),
+        GoRoute(
+          path: 'login',
+          builder: (BuildContext context, GoRouterState state) {
+            return const LoginPage();
+          },
+          routes: <RouteBase>[
+            GoRoute(
+              path: 'profile',
+              builder: (BuildContext context, GoRouterState state) {
+                return const Profile();
+              },
+            )
+          ],
         ),
       ],
     ),
@@ -58,9 +61,21 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Home Screen')),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () => context.go('/details'),
-          child: const Text('Go to the Details screen'),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () => context.go('/details'),
+              child: const Text('Go to the Details screen'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.go('/login'),
+              child: const Text('Go to the logIn page'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.go('/login/profile'),
+              child: const Text('Go to the profile page'),
+            ),
+          ],
         ),
       ),
     );
