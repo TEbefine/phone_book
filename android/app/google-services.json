@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "682814163678",
+    "project_id": "phone-contact-96b59",
+    "storage_bucket": "phone-contact-96b59.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682814163678:android:b3454ea84a59ba27f1104f",
+        "android_client_info": {
+          "package_name": "com.contact.phone_book"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTbCWpiY_PQiEuM1wQh7r2WalJAMocDJ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
