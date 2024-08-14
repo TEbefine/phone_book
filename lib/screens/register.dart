@@ -26,6 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               controller: _emailController,
               decoration: const InputDecoration(hintText: 'Put In your Email'),
               keyboardType: TextInputType.emailAddress,
+              onSubmitted: (_) => _submitForm(),
             ),
             TextField(
               controller: _passwordController,
@@ -34,6 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               autocorrect: false,
               decoration:
                   const InputDecoration(hintText: 'Put In your Password'),
+              onSubmitted: (_) => _submitForm(),
             ),
             TextField(
               controller: _duplicateController,
@@ -42,16 +44,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               autocorrect: false,
               decoration:
                   const InputDecoration(hintText: 'Confirm your Password'),
+              onSubmitted: (_) => _submitForm(),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                    onPressed: () {
-                      _registerUser(context, _emailController.text,
-                          _passwordController.text, _duplicateController.text);
-                    },
-                    child: const Text('Register')),
+                    onPressed: _submitForm, child: const Text('Register')),
                 const SizedBox(width: 20.0),
                 ElevatedButton(
                     onPressed: () => context.go('/'),
@@ -62,6 +61,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void _submitForm() {
+    _registerUser(
+      context,
+      _emailController.text,
+      _passwordController.text,
+      _duplicateController.text,
+    );
+
+    _emailController.clear();
+    _passwordController.clear();
+    _duplicateController.clear();
   }
 }
 
@@ -94,14 +106,36 @@ Future<void> _registerUser(BuildContext context, String email, String password,
   }
 
   try {
-    final userCredential = FirebaseAuth.instance.createUserWithEmailAndPassword(
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
-    print(userCredential);
+    const snackBar = SnackBar(
+      content: Text("Registation Successful"),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   } on FirebaseAuthException catch (e) {
-    print('e.code');
-  } catch (e) {
+    if (e.code == 'weak-password') {
+      const snackBar = SnackBar(
+        content: Text("Password's too weak"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    } else if (e.code == 'email-already-in-use') {
+      const snackBar = SnackBar(
+        content: Text("email already in use"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    } else {
+      // ... handle other FirebaseAuth exceptions
+      const snackBar = SnackBar(
+        content: Text("Some thing else happen"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }
+  } on Exception catch (e) {
     print(e);
   }
 }
