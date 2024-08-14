@@ -10,6 +10,10 @@ class UserRepository {
 
   User? _user;
 
+  bool isLoggedIn() {
+    return _user != null;
+  }
+
   Future<void> signInUser(String email, String password) async {
     try {
       final userCredential = await FirebaseAuth.instance

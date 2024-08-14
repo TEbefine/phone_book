@@ -99,6 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       }
 
+      _emailController.clear();
+      _passwordController.clear();
       // _emailController.dispose();
       // _passwordController.dispose();
     }
