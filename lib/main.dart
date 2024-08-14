@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_book/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:phone_book/function/auth_checker.dart';
 import 'package:phone_book/screens/login.dart';
+import 'package:phone_book/screens/profile.dart';
 import 'package:phone_book/screens/register.dart';
 
 void main() async {
@@ -20,7 +22,7 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
   GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const Home();
+        return const AuthChecker();
       }),
   GoRoute(
       path: '/login',
@@ -28,11 +30,15 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
         return const LoginScreen();
       }),
   GoRoute(
-    path: '/register',
-    builder: (BuildContext context, GoRouterState state) {
-      return const RegisterScreen();
-    },
-  )
+      path: '/register',
+      builder: (BuildContext context, GoRouterState state) {
+        return const RegisterScreen();
+      }),
+  GoRoute(
+      path: '/profile',
+      builder: (BuildContext context, GoRouterState state) {
+        return const ProfileScreen();
+      }),
 ]);
 
 class MyApp extends StatelessWidget {

@@ -75,67 +75,76 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _passwordController.clear();
     _duplicateController.clear();
   }
-}
 
-Future<void> _registerUser(BuildContext context, String email, String password,
-    String checkPassword) async {
-  if (email.isEmpty) {
-    const snackBar = SnackBar(
-      content: Text("Email can't be Empty"),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    return;
-  } else if (password.isEmpty) {
-    const snackBar = SnackBar(
-      content: Text("Password can't be Empty"),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    return;
-  } else if (checkPassword.isEmpty) {
-    const snackBar = SnackBar(
-      content: Text("Please Confirm your Password"),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    return;
-  } else if (password != checkPassword) {
-    const snackBar = SnackBar(
-      content: Text("Passwords do not match"),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    return;
-  }
-
-  try {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    const snackBar = SnackBar(
-      content: Text("Registation Successful"),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'weak-password') {
+  Future<void> _registerUser(BuildContext context, String email,
+      String password, String checkPassword) async {
+    if (email.isEmpty) {
       const snackBar = SnackBar(
-        content: Text("Password's too weak"),
+        content: Text("Email can't be Empty"),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return;
-    } else if (e.code == 'email-already-in-use') {
+    } else if (password.isEmpty) {
       const snackBar = SnackBar(
-        content: Text("email already in use"),
+        content: Text("Password can't be Empty"),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return;
-    } else {
-      // ... handle other FirebaseAuth exceptions
+    } else if (checkPassword.isEmpty) {
       const snackBar = SnackBar(
-        content: Text("Some thing else happen"),
+        content: Text("Please Confirm your Password"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    } else if (password != checkPassword) {
+      const snackBar = SnackBar(
+        content: Text("Passwords do not match"),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return;
     }
-  } on Exception catch (e) {
-    print(e);
+
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (!mounted) return;
+
+      const snackBar = SnackBar(
+        content: Text("Registation Successful"),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      context.go('/profile');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        const snackBar = SnackBar(
+          content: Text("Password's too weak"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        return;
+      } else if (e.code == 'email-already-in-use') {
+        const snackBar = SnackBar(
+          content: Text("email already in use"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        return;
+      } else {
+        // ... handle other FirebaseAuth exceptions
+        const snackBar = SnackBar(
+          content: Text("Some thing Error happen"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        return;
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+
+    _emailController.dispose();
+    _passwordController.dispose();
+    _duplicateController.dispose();
   }
 }
