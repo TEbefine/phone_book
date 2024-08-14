@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_book/function/authentication.dart';
@@ -17,17 +18,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Object>(
-        stream: null,
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             );
-          } else if (snapshot.hasData) {
-            Future.microtask(() => context.go('/profile'));
-            return const Scaffold();
-          } else {
+          } else if (!snapshot.hasData) {
             return Scaffold(
               body: Center(
                 child: Column(
@@ -70,6 +68,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             );
+          } else {
+            Future.microtask(() => context.go('/profile'));
+            return const Scaffold();
           }
         });
   }
