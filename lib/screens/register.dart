@@ -16,51 +16,66 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(hintText: 'Put In your Email'),
-              keyboardType: TextInputType.emailAddress,
-              onSubmitted: (_) => _submitForm(),
-            ),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration:
-                  const InputDecoration(hintText: 'Put In your Password'),
-              onSubmitted: (_) => _submitForm(),
-            ),
-            TextField(
-              controller: _duplicateController,
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration:
-                  const InputDecoration(hintText: 'Confirm your Password'),
-              onSubmitted: (_) => _submitForm(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: _submitForm, child: const Text('Register')),
-                const SizedBox(width: 20.0),
-                ElevatedButton(
-                    onPressed: () => context.go('/'),
-                    child: const Text('Cancel')),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+    return StreamBuilder<Object>(
+        stream: null,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          } else if (snapshot.hasData) {
+            Future.microtask(() => context.go('/profile'));
+            return const Scaffold();
+          } else {
+            return Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextField(
+                      controller: _emailController,
+                      decoration:
+                          const InputDecoration(hintText: 'Put In your Email'),
+                      keyboardType: TextInputType.emailAddress,
+                      onSubmitted: (_) => _submitForm(),
+                    ),
+                    TextField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: const InputDecoration(
+                          hintText: 'Put In your Password'),
+                      onSubmitted: (_) => _submitForm(),
+                    ),
+                    TextField(
+                      controller: _duplicateController,
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: const InputDecoration(
+                          hintText: 'Confirm your Password'),
+                      onSubmitted: (_) => _submitForm(),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            onPressed: _submitForm,
+                            child: const Text('Register')),
+                        const SizedBox(width: 20.0),
+                        ElevatedButton(
+                            onPressed: () => context.go('/profile'),
+                            child: const Text('Cancel')),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            );
+          }
+        });
   }
 
   void _submitForm() {
@@ -143,8 +158,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       print(e);
     }
 
-    _emailController.dispose();
-    _passwordController.dispose();
-    _duplicateController.dispose();
+    // _emailController.dispose();
+    // _passwordController.dispose();
+    // _duplicateController.dispose();
   }
 }

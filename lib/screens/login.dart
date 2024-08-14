@@ -17,44 +17,61 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_isLoading) const CircularProgressIndicator(),
-            if (_errorMessage != null)
-              Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(hintText: 'Put In your ID'),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration:
-                  const InputDecoration(hintText: 'Put In your Password'),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: _isLoading ? null : signIn,
-                    child: const Text('Login')),
-                const SizedBox(width: 20.0),
-                ElevatedButton(
-                    onPressed: () => context.go('/register'),
-                    child: const Text('Register')),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+    return StreamBuilder<Object>(
+        stream: null,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          } else if (snapshot.hasData) {
+            Future.microtask(() => context.go('/profile'));
+            return const Scaffold();
+          } else {
+            return Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (_isLoading) const CircularProgressIndicator(),
+                    if (_errorMessage != null)
+                      Text(_errorMessage!,
+                          style: const TextStyle(color: Colors.red)),
+                    TextField(
+                      controller: _emailController,
+                      decoration:
+                          const InputDecoration(hintText: 'Put In your ID'),
+                      keyboardType: TextInputType.emailAddress,
+                      onSubmitted: _isLoading ? null : (value) => signIn(),
+                    ),
+                    TextField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      onSubmitted: _isLoading ? null : (value) => signIn(),
+                      decoration: const InputDecoration(
+                          hintText: 'Put In your Password'),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            onPressed: _isLoading ? null : signIn,
+                            child: const Text('Login')),
+                        const SizedBox(width: 20.0),
+                        ElevatedButton(
+                            onPressed: () => context.go('/register'),
+                            child: const Text('Register')),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        });
   }
 
   Future<void> signIn() async {

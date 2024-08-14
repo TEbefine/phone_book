@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:phone_book/main.dart';
 import 'package:phone_book/screens/login.dart';
+import 'package:phone_book/screens/profile.dart';
 
 class AuthChecker extends StatelessWidget {
   const AuthChecker({super.key});
@@ -19,8 +19,8 @@ class AuthChecker extends StatelessWidget {
             return Center(
               child: Text('Error: ${snapshot.error}'),
             );
-          } else if (snapshot.hasError) {
-            return const Home();
+          } else if (snapshot.hasData) {
+            return const ProfileScreen();
           } else {
             return const LoginScreen();
           }
