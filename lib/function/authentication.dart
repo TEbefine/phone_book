@@ -10,10 +10,6 @@ class UserRepository {
 
   User? _user;
 
-  bool isLoggedIn() {
-    return _user != null;
-  }
-
   Future<void> registerUser(
       String email, String password, String checkPassword) async {
     try {

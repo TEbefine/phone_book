@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phone_book/function/authentication.dart';
 import 'package:phone_book/screens/error.dart';
 import 'package:phone_book/screens/login.dart';
 import 'package:phone_book/screens/profile.dart';
@@ -27,7 +26,8 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
   GoRoute(
       path: '/register',
       redirect: (context, state) {
-        if (UserRepository.instance.isLoggedIn()) {
+        final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+        if (isLoggedIn) {
           return '/error?message=Please log out first&button=profile';
         }
         return null;
@@ -38,7 +38,8 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
   GoRoute(
       path: '/profile',
       redirect: (context, state) {
-        if (!UserRepository.instance.isLoggedIn()) {
+        final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+        if (!isLoggedIn) {
           return '/login';
         }
         return null;
