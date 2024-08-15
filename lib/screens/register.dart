@@ -26,9 +26,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             return const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             );
-          } else if (snapshot.hasData) {
-            Future.microtask(() => context.go('/profile'));
-            return const Scaffold();
           } else {
             return Scaffold(
               body: Center(
