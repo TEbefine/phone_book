@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:phone_book/screens/login.dart';
-import 'package:phone_book/screens/profile.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthChecker extends StatelessWidget {
   const AuthChecker({super.key});
@@ -20,9 +19,15 @@ class AuthChecker extends StatelessWidget {
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (snapshot.hasData) {
-            return const ProfileScreen();
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.go('/profile');
+            });
+            return const SizedBox.shrink();
           } else {
-            return const LoginScreen();
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.go('/login');
+            });
+            return const SizedBox.shrink();
           }
         });
   }

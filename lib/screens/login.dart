@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
       context.go('/profile');
     } catch (e) {
       setState(() {
-        _errorMessage = e.toString();
+        _errorMessage = _parseError(e.toString());
       });
     } finally {
       if (mounted) {
@@ -102,5 +102,13 @@ class _LoginScreenState extends State<LoginScreen> {
       _emailController.clear();
       _passwordController.clear();
     }
+  }
+
+  String _parseError(String error) {
+    final match = RegExp(r'\[(.*?)\]\s*(.*)').firstMatch(error);
+    if (match != null && match.groupCount == 2) {
+      return match.group(2) ?? 'Unknown error';
+    }
+    return error;
   }
 }

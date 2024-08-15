@@ -44,7 +44,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
       path: '/error',
       builder: (BuildContext context, GoRouterState state) {
         final message = state.uri.queryParameters['message'] ?? 'Unknown error';
-        final button = state.uri.queryParameters['button'] ?? 'OK';
+        final button = state.uri.queryParameters['button'] ?? 'login';
         return ErrorScreen(message: message, button: button);
       }),
 ]);
