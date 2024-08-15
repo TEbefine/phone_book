@@ -20,6 +20,12 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
       }),
   GoRoute(
       path: '/register',
+      redirect: (context, state) {
+        if (UserRepository.instance.isLoggedIn()) {
+          return '/error?message=Please%20log%20out%20first';
+        }
+        return null;
+      },
       builder: (BuildContext context, GoRouterState state) {
         return const RegisterScreen();
       }),
@@ -33,5 +39,11 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
       },
       builder: (BuildContext context, GoRouterState state) {
         return const ProfileScreen();
+      }),
+  GoRoute(
+      path: '/error',
+      builder: (BuildContext context, GoRouterState state) {
+        final message = state.uri.queryParameters['message'] ?? 'Unknown error';
+        return ErrorScreen(message: message);
       }),
 ]);
