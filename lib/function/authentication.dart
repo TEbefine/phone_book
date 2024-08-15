@@ -14,6 +14,20 @@ class UserRepository {
     return _user != null;
   }
 
+  Future<void> registerUser(
+      String email, String password, String checkPassword) async {
+    try {
+      final userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      _user = userCredential.user;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> signInUser(String email, String password) async {
     try {
       final userCredential = await FirebaseAuth.instance
