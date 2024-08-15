@@ -58,28 +58,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// class Home extends StatelessWidget {
-//   const Home({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Details Screen')),
-//       body: Center(
-//         child: Column(
-//           children: [
-//             ElevatedButton(
-//               onPressed: () => context.go('/login'),
-//               child: const Text('Go to the Login screen'),
-//             ),
-//             ElevatedButton(
-//               onPressed: () => context.go('/register'),
-//               child: const Text('Go to the register screen'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

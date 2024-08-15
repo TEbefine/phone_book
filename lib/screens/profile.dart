@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_book/function/authentication.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +21,23 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const Text('Hello'),
             ElevatedButton(
-                onPressed: () async {
-                  await UserRepository.instance.signOut();
-                  context.go('login');
-                },
+                onPressed: _isLoading ? null : signOut,
                 child: const Text('logOut'))
           ],
         ),
       ),
     );
+  }
+
+  Future<void> signOut() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await UserRepository.instance.signOut();
+
+    if (!mounted) return;
+
+    context.go('/login');
   }
 }
