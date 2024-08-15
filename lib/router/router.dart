@@ -13,9 +13,9 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
     redirect: (context, state) {
       final isLoggedIn = FirebaseAuth.instance.currentUser != null;
       if (isLoggedIn) {
-        return '/profile'; // ถ้าผู้ใช้เข้าสู่ระบบแล้ว ให้เปลี่ยนเส้นทางไปที่หน้าโปรไฟล์
+        return '/profile';
       } else {
-        return '/login'; // ถ้ายังไม่ได้เข้าสู่ระบบ ให้เปลี่ยนเส้นทางไปที่หน้าเข้าสู่ระบบ
+        return '/login';
       }
     },
   ),
@@ -38,8 +38,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
   GoRoute(
       path: '/profile',
       redirect: (context, state) {
-        final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-        if (!isLoggedIn) {
+        if (!UserRepository.instance.isLoggedIn()) {
           return '/login';
         }
         return null;
