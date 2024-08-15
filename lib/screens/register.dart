@@ -88,28 +88,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _errorMessage = null;
     });
 
-    try {
-      await UserRepository.instance.registerUser(_emailController.text,
-          _passwordController.text, _duplicateController.text);
+    bool passwordMatch = true;
 
-      if (!mounted) return;
-
-      context.go('/profile');
-    } catch (e) {
+    if (_passwordController.text != _duplicateController.text) {
       setState(() {
-        _errorMessage = _parseError(e.toString());
+        _errorMessage = 'Passwords do not match';
+        _isLoading = false;
       });
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-
-      _emailController.clear();
-      _passwordController.clear();
-      _duplicateController.clear();
+      passwordMatch = false;
     }
+
+    if (passwordMatch) {
+      try {
+        await UserRepository.instance.registerUser(_emailController.text,
+            _passwordController.text, _duplicateController.text);
+
+        if (!mounted) return;
+
+        context.go('/profile');
+      } catch (e) {
+        setState(() {
+          _errorMessage = _parseError(e.toString());
+        });
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
+    }
+    _emailController.clear();
+    _passwordController.clear();
+    _duplicateController.clear();
   }
 
   String _parseError(String error) {
