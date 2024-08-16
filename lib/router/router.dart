@@ -9,13 +9,12 @@ import 'package:phone_book/screens/register.dart';
 final GoRouter router = GoRouter(routes: <RouteBase>[
   GoRoute(
     path: '/',
-    redirect: (context, state) {
+    builder: (BuildContext context, GoRouterState state) {
       final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-      if (isLoggedIn) {
-        return '/profile';
-      } else {
-        return '/login';
+      if (!isLoggedIn) {
+        return const LoginScreen();
       }
+      return const ProfileScreen();
     },
   ),
   GoRoute(
@@ -37,14 +36,11 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
       }),
   GoRoute(
       path: '/profile',
-      redirect: (context, state) {
+      builder: (BuildContext context, GoRouterState state) {
         final isLoggedIn = FirebaseAuth.instance.currentUser != null;
         if (!isLoggedIn) {
-          return '/login';
+          return const LoginScreen();
         }
-        return null;
-      },
-      builder: (BuildContext context, GoRouterState state) {
         return const ProfileScreen();
       }),
   GoRoute(

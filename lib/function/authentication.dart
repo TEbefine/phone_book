@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:phone_book/firebase_options.dart';
 
 class UserRepository {
   static UserRepository? _instance;
@@ -9,6 +11,17 @@ class UserRepository {
   UserRepository._internal();
 
   User? _user;
+
+  FirebaseAuth get _frbInstance => FirebaseAuth.instance;
+
+  Future<void> init() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    await Firebase.initializeApp();
+    await _frbInstance.setPersistence(Persistence.LOCAL);
+    _user = _frbInstance.currentUser;
+  }
 
   Future<void> registerUser(
       String email, String password, String checkPassword) async {

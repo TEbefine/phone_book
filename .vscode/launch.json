@@ -1,0 +1,14 @@
+{
+    "configurations": [
+      {
+        "name": "(DEBUG DEV MODE)",
+        "request": "launch",
+        "type": "dart",
+        "args": [
+          "--web-port",
+          "8080"
+        ]
+      }
+    ]
+  }
+  
