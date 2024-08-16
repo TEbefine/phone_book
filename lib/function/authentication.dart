@@ -18,7 +18,6 @@ class UserRepository {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    await Firebase.initializeApp();
     await _frbInstance.setPersistence(Persistence.LOCAL);
     _user = _frbInstance.currentUser;
   }
