@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_book/function/authentication.dart';
@@ -15,43 +16,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = UserRepository.instance.user;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('PROFILE'),
-        centerTitle: true,
+        actions: [
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {
+                  context.go('/profile/edit-profile');
+                },
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Edit Name'),
+              ),
+            ],
+          ),
+        ],
       ),
-      body: const ProfileLayout(),
+      body: ProfileLayout(user: user),
     );
   }
 }
-
-
-// Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Profile'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             const Text('Hello'),
-//             ElevatedButton(
-//                 onPressed: _isLoading ? null : signOut,
-//                 child: const Text('logOut'))
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Future<void> signOut() async {
-//     setState(() {
-//       _isLoading = true;
-//     });
-
-//     await UserRepository.instance.signOut();
-
-//     if (!mounted) return;
-
-//     context.go('/login');
-//   }

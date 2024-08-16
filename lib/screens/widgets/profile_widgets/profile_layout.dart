@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:phone_book/function/authentication.dart';
 
 class ProfileLayout extends StatelessWidget {
-  const ProfileLayout({super.key});
+  final User? user;
+  const ProfileLayout({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -14,26 +18,49 @@ class ProfileLayout extends StatelessWidget {
             backgroundImage: NetworkImage(
                 'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
           ),
+          const SizedBox(height: 10.0),
           Text(
-            'User Name',
+            user?.displayName ?? 'User Name',
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 30.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // ปุ่ม Delete
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Edit Profile'),
+                        content: const Text('This is a small pop-up window.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Close'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
                 child: const Text('Delete'),
               ),
-              SizedBox(width: 20.0),
-              // ปุ่ม Logout
+              const SizedBox(width: 20.0),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => signOut(context),
                 child: const Text('Logout'),
               ),
             ],
           )
         ]);
+  }
+
+  Future<void> signOut(BuildContext context) async {
+    await UserRepository.instance.signOut();
+
+    context.go('/login');
   }
 }

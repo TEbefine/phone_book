@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:phone_book/screens/edit_profile.dart';
 import 'package:phone_book/screens/error.dart';
 import 'package:phone_book/screens/login.dart';
 import 'package:phone_book/screens/profile.dart';
@@ -35,14 +36,27 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
         return const RegisterScreen();
       }),
   GoRoute(
-      path: '/profile',
-      builder: (BuildContext context, GoRouterState state) {
-        final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-        if (!isLoggedIn) {
-          return const LoginScreen();
-        }
-        return const ProfileScreen();
-      }),
+    path: '/profile',
+    builder: (BuildContext context, GoRouterState state) {
+      final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+      if (!isLoggedIn) {
+        return const LoginScreen();
+      }
+      return const ProfileScreen();
+    },
+    routes: [
+      GoRoute(
+        path: 'edit-profile',
+        builder: (BuildContext context, GoRouterState state) {
+          final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+          if (!isLoggedIn) {
+            return const LoginScreen();
+          }
+          return const EditProfile();
+        },
+      ),
+    ],
+  ),
   GoRoute(
       path: '/error',
       builder: (BuildContext context, GoRouterState state) {

@@ -55,5 +55,14 @@ class UserRepository {
     }
   }
 
+  Future<void> changeUserName(String newName) async {
+    try {
+      await FirebaseAuth.instance.currentUser?.updateDisplayName(newName);
+      _user = FirebaseAuth.instance.currentUser;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   User? get user => _user;
 }
