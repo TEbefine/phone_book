@@ -23,6 +23,7 @@ class _EditProfileState extends State<EditProfile> {
             TextField(
               controller: _nameController,
               decoration: const InputDecoration(labelText: 'Enter new name'),
+              onSubmitted: (value) => changeName(context, _nameController.text),
             ),
             ElevatedButton(
               onPressed: () => changeName(context, _nameController.text),

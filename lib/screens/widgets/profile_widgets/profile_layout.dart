@@ -18,9 +18,10 @@ class _ProfileLayoutState extends State<ProfileLayout> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const CircleAvatar(
+          CircleAvatar(
             radius: 50.0,
-            backgroundImage: NetworkImage(
+            backgroundImage: NetworkImage(UserRepository
+                    .instance.user?.photoURL ??
                 'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
           ),
           const SizedBox(height: 10.0),
@@ -53,7 +54,6 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              print(UserRepository.instance.user);
                               Navigator.of(context).pop();
                             },
                             child: const Text('Cancel'),
