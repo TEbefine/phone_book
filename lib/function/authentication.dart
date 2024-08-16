@@ -22,8 +22,7 @@ class UserRepository {
     _user = _frbInstance.currentUser;
   }
 
-  Future<void> registerUser(
-      String email, String password, String checkPassword) async {
+  Future<void> registerUser(String email, String password) async {
     try {
       final userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -58,7 +57,21 @@ class UserRepository {
   Future<void> changeUserName(String newName) async {
     try {
       await FirebaseAuth.instance.currentUser?.updateDisplayName(newName);
-      _user = FirebaseAuth.instance.currentUser;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteUser() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await user.delete();
+        _user = null;
+        print('User deleted successfully.');
+      } else {
+        print('No user is signed in.');
+      }
     } catch (e) {
       rethrow;
     }

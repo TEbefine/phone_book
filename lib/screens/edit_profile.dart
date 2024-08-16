@@ -43,8 +43,6 @@ class _EditProfileState extends State<EditProfile> {
       const SnackBar(content: Text('User name updated successfully!')),
     );
 
-    await UserRepository.instance.user?.reload();
-
     context.go('/profile');
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,7 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextField(
                       controller: _emailController,
                       decoration:
-                          const InputDecoration(hintText: 'Put In your Email'),
+                          const InputDecoration(labelText: 'Put In your Email'),
                       keyboardType: TextInputType.emailAddress,
                       onSubmitted: _isLoading ? null : (value) => register(),
                     ),
@@ -100,8 +101,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if (passwordMatch) {
       try {
-        await UserRepository.instance.registerUser(_emailController.text,
-            _passwordController.text, _duplicateController.text);
+        await UserRepository.instance
+            .registerUser(_emailController.text, _passwordController.text);
 
         if (!mounted) return;
 

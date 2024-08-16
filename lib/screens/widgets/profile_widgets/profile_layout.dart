@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_book/function/authentication.dart';
 
-class ProfileLayout extends StatelessWidget {
-  final User? user;
-  const ProfileLayout({super.key, required this.user});
+class ProfileLayout extends StatefulWidget {
+  const ProfileLayout({super.key});
 
+  @override
+  State<ProfileLayout> createState() => _ProfileLayoutState();
+}
+
+class _ProfileLayoutState extends State<ProfileLayout> {
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,7 +25,7 @@ class ProfileLayout extends StatelessWidget {
           ),
           const SizedBox(height: 10.0),
           Text(
-            user?.displayName ?? 'User Name',
+            UserRepository.instance.user?.displayName ?? 'User Name',
           ),
           const SizedBox(height: 30.0),
           Row(
@@ -32,14 +37,30 @@ class ProfileLayout extends StatelessWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text('Edit Profile'),
-                        content: const Text('This is a small pop-up window.'),
+                        title: const Text('Confirm Delete Account'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                labelText: 'Enter your password',
+                              ),
+                            ),
+                          ],
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
+                              print(UserRepository.instance.user);
                               Navigator.of(context).pop();
                             },
-                            child: const Text('Close'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () => deleteUser(context),
+                            child: const Text('Delete'),
                           ),
                         ],
                       );
@@ -62,5 +83,25 @@ class ProfileLayout extends StatelessWidget {
     await UserRepository.instance.signOut();
 
     context.go('/login');
+  }
+
+  Future<void> deleteUser(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.currentUser?.reauthenticateWithCredential(
+        EmailAuthProvider.credential(
+          email: FirebaseAuth.instance.currentUser!.email!,
+          password: _passwordController.text,
+        ),
+      );
+      await UserRepository.instance.deleteUser();
+    } catch (e) {
+      print('Error reauthenticating or deleting user: ${e.toString()}');
+    } finally {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User deleted successfully.')),
+      );
+
+      context.go('/login');
+    }
   }
 }

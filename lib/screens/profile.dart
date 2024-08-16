@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phone_book/function/authentication.dart';
 import 'package:phone_book/screens/widgets/profile_widgets/profile_layout.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -12,12 +10,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
-    User? user = UserRepository.instance.user;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('PROFILE'),
@@ -38,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-      body: ProfileLayout(user: user),
+      body: const ProfileLayout(),
     );
   }
 }
