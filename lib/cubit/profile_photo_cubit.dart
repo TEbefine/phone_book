@@ -1,53 +1,37 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_for_web/image_picker_for_web.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 part 'profile_photo_state.dart';
 
 class ProfilePhotoCubit extends Cubit<ProfilePhotoState> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
   ProfilePhotoCubit() : super(ProfilePhotoInitial());
 
-  final ImagePicker _picker = ImagePicker();
-
-  Future<void> pickAndCropImage() async {
+  Future<void> updateProfilePhoto(String filePath) async {
     emit(ProfilePhotoLoading());
+
     try {
-      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-      final picker = ImagePickerPlugin();
-      if (picker == null) {
-        emit(const ProfilePhotoFailure("No image selected"));
+      final user = _auth.currentUser;
+      if (user == null) {
+        emit(const ProfilePhotoFailure("User not logged in"));
         return;
       }
 
-      final croppedFile = await ImageCropper().cropImage(
-        sourcePath: pickedFile!.path,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9
-        ],
-        androidUiSettings: const AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: Colors.deepOrange,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.square,
-            lockAspectRatio: false),
-        iosUiSettings: const IOSUiSettings(
-          minimumAspectRatio: 1.0,
-        ),
-      );
+      final file = File(filePath);
+      final ref = _storage.ref().child('profile_photos/${user.uid}.jpg');
+      await ref.putFile(file);
 
-      if (croppedFile != null) {
-        // Update photo in Firebase
-        // await FirebaseAuth.instance.currentUser.updatePhotoURL(croppedFile.path);
-        emit(ProfilePhotoSuccess(croppedFile.path));
-      } else {
-        emit(const ProfilePhotoFailure("Failed to crop image"));
-      }
+      final photoUrl = await ref.getDownloadURL();
+
+      await user.updatePhotoURL(photoUrl);
+
+      emit(ProfilePhotoSuccess(photoUrl));
     } catch (e) {
       emit(ProfilePhotoFailure(e.toString()));
     }

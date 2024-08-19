@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:phone_book/cubit/profile_photo_cubit.dart';
 import 'package:phone_book/function/authentication.dart';
 
@@ -25,15 +26,21 @@ class _ProfileLayoutState extends State<ProfileLayout> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             GestureDetector(
-              onTap: () {
-                context.read<ProfilePhotoCubit>().pickAndCropImage();
+              onTap: () async {
+                // เลือกไฟล์ภาพจาก device และอัปโหลด
+                final filePath = await _pickImage();
+                if (filePath != null) {
+                  context
+                      .read<ProfilePhotoCubit>()
+                      .updateProfilePhoto(filePath);
+                }
               },
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: state is ProfilePhotoSuccess
-                    ? FileImage(File(state.photoPath))
-                    : const AssetImage('assets/default_profile.png')
-                        as ImageProvider,
+                // backgroundImage: state is ProfilePhotoSuccess
+                //     ? FileImage(File(state.photoPath))
+                //     : const AssetImage('assets/default_profile.png')
+                //         as ImageProvider,
               ),
             ),
             if (state is ProfilePhotoLoading) const CircularProgressIndicator(),
@@ -124,5 +131,11 @@ class _ProfileLayoutState extends State<ProfileLayout> {
 
       context.go('/login');
     }
+  }
+
+  Future<String?> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    return pickedFile?.path;
   }
 }

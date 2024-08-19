@@ -12,12 +12,12 @@ final class ProfilePhotoInitial extends ProfilePhotoState {}
 final class ProfilePhotoLoading extends ProfilePhotoState {}
 
 final class ProfilePhotoSuccess extends ProfilePhotoState {
-  final String photoPath;
+  final String photoUrl;
 
-  const ProfilePhotoSuccess(this.photoPath);
+  const ProfilePhotoSuccess(this.photoUrl);
 
   @override
-  List<Object> get props => [photoPath];
+  List<Object> get props => [photoUrl];
 }
 
 final class ProfilePhotoFailure extends ProfilePhotoState {
