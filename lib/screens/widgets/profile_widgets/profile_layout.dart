@@ -37,10 +37,9 @@ class _ProfileLayoutState extends State<ProfileLayout> {
               },
               child: CircleAvatar(
                 radius: 50,
-                // backgroundImage: state is ProfilePhotoSuccess
-                //     ? FileImage(File(state.photoPath))
-                //     : const AssetImage('assets/default_profile.png')
-                //         as ImageProvider,
+                backgroundImage: NetworkImage(UserRepository
+                        .instance.user?.photoURL ??
+                    'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
               ),
             ),
             if (state is ProfilePhotoLoading) const CircularProgressIndicator(),
