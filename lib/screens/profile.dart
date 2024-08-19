@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:phone_book/cubit/test_plus_button.dart';
 import 'package:phone_book/screens/widgets/profile_widgets/profile_layout.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -33,6 +35,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
       body: const ProfileLayout(),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FloatingActionButton(
+            onPressed: () => context.read<CounterCubit>().increment(),
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            onPressed: () => context.read<CounterCubit>().decrement(),
+            tooltip: 'Increment',
+            child: const Icon(Icons.remove),
+          ),
+        ],
+      ),
     );
   }
 }

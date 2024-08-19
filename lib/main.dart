@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phone_book/cubit/test_plus_button.dart';
 import 'package:phone_book/function/authentication.dart';
 import 'package:phone_book/router/router.dart';
 
@@ -7,7 +9,10 @@ void main() async {
 
   await UserRepository.instance.init();
 
-  runApp(const MyApp());
+  runApp(BlocProvider(
+    create: (context) => CounterCubit(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

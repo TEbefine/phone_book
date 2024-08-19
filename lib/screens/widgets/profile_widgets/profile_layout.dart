@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:phone_book/cubit/test_plus_button.dart';
 import 'package:phone_book/function/authentication.dart';
 
 class ProfileLayout extends StatefulWidget {
@@ -75,7 +77,22 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                 child: const Text('Logout'),
               ),
             ],
-          )
+          ),
+
+          // Test code
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Count:'),
+              BlocBuilder<CounterCubit, CounterState>(
+                  builder: (context, state) {
+                return Text(
+                  '${state.count}',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                );
+              })
+            ],
+          ),
         ]);
   }
 
