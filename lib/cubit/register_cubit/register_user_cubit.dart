@@ -25,6 +25,7 @@ class RegisterUserCubit extends Cubit<RegisterUserState> {
       final match = RegExp(r'\[(.*?)\]\s*(.*)').firstMatch(e.toString());
       if (match != null && match.groupCount == 2) {
         emit(RegisterUserFailure(error: match.group(2) ?? 'Unknown error'));
+        return;
       }
       emit(RegisterUserFailure(error: e.toString()));
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phone_book/cubit/login_out_cubit/login_out_cubit.dart';
 import 'package:phone_book/cubit/register_cubit/register_user_cubit.dart';
 import 'package:phone_book/cubit/update_cubit/update_name_cubit.dart';
 import 'package:phone_book/function/authentication.dart';
@@ -14,6 +15,7 @@ void main() async {
     providers: [
       BlocProvider(create: (context) => UpdateNameCubit(router)),
       BlocProvider(create: (context) => RegisterUserCubit()),
+      BlocProvider(create: (context) => LoginOutCubit()),
     ],
     child: const MyApp(),
   ));

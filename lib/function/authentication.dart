@@ -62,16 +62,14 @@ class UserRepository {
     }
   }
 
-  Future<void> deleteUser() async {
+  Future<void> deleteUser(String password) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        await user.delete();
-        _user = null;
-        print('User deleted successfully.');
-      } else {
-        print('No user is signed in.');
-      }
+      await FirebaseAuth.instance.currentUser?.reauthenticateWithCredential(
+          EmailAuthProvider.credential(
+              email: FirebaseAuth.instance.currentUser!.email!,
+              password: password));
+      await user?.delete();
+      _user = null;
     } catch (e) {
       rethrow;
     }

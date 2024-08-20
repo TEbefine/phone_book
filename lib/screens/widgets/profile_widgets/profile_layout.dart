@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:phone_book/cubit/login_out_cubit/login_out_cubit.dart';
 import 'package:phone_book/function/authentication.dart';
 
 class ProfileLayout extends StatefulWidget {
@@ -71,7 +72,7 @@ class _ProfileLayoutState extends State<ProfileLayout> {
               ),
               const SizedBox(width: 20.0),
               ElevatedButton(
-                onPressed: () => signOut(context),
+                onPressed: () => context.read<LoginOutCubit>().signOut(),
                 child: const Text('Logout'),
               ),
             ],
@@ -79,21 +80,9 @@ class _ProfileLayoutState extends State<ProfileLayout> {
         ]);
   }
 
-  Future<void> signOut(BuildContext context) async {
-    await UserRepository.instance.signOut();
-
-    context.go('/login');
-  }
-
   Future<void> deleteUser(BuildContext context) async {
     try {
-      await FirebaseAuth.instance.currentUser?.reauthenticateWithCredential(
-        EmailAuthProvider.credential(
-          email: FirebaseAuth.instance.currentUser!.email!,
-          password: _passwordController.text,
-        ),
-      );
-      await UserRepository.instance.deleteUser();
+      await UserRepository.instance.deleteUser(_passwordController.text);
     } catch (e) {
       print('Error reauthenticating or deleting user: ${e.toString()}');
     } finally {
