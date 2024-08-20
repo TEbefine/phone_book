@@ -12,6 +12,10 @@ class UpdateNameCubit extends Cubit<UpdateNameState> {
 
   Future<void> updateName(String newName) async {
     emit(UpdateNameLoading());
+    if (newName.isEmpty) {
+      emit(const UpdateNameFailure(error: "Please enter your name."));
+      return;
+    }
 
     try {
       await UserRepository.instance.changeUserName(newName);

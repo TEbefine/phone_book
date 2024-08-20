@@ -42,6 +42,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 content: Text('User name updated successfully!'),
               ),
             );
+          } else if (state is UpdateNameFailure) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
         child: const ProfileLayout(),

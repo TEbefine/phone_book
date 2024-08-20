@@ -8,3 +8,16 @@ sealed class RegisterUserState extends Equatable {
 }
 
 final class RegisterUserInitial extends RegisterUserState {}
+
+final class RegisterUserLoading extends RegisterUserState {}
+
+final class RegisterUserSuccess extends RegisterUserState {}
+
+final class RegisterUserFailure extends RegisterUserState {
+  final String error;
+
+  const RegisterUserFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}
