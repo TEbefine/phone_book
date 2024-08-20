@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:phone_book/cubit/login_out_cubit/login_out_cubit.dart';
 import 'package:phone_book/cubit/register_cubit/register_user_cubit.dart';
 import 'package:phone_book/function/authentication.dart';
@@ -12,7 +16,40 @@ class ProfileLayout extends StatefulWidget {
 }
 
 class _ProfileLayoutState extends State<ProfileLayout> {
+  File? _pickedImage;
+  Uint8List? webImage = Uint8List(8);
+
   final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _pickImge() async {
+    if (!kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var selected = File(image.path);
+        setState(() {
+          _pickedImage = selected;
+        });
+      } else {
+        print('No image has been picked');
+      }
+    } else if (kIsWasm) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var f = await image.readAsBytes();
+        setState(() {
+          webImage = f;
+          _pickedImage = File('a');
+        });
+      } else {
+        print('No image has been picked');
+      }
+    } else {
+      print('some thing went wrong');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,10 +66,19 @@ class _ProfileLayoutState extends State<ProfileLayout> {
           // Text(
           //   UserRepository.instance.user?.displayName ?? 'User Name',
           // ),
-
+          Image(
+            image: _pickedImage != null
+                ? FileImage(_pickedImage!)
+                : MemoryImage(webImage!),
+            fit: BoxFit.fill,
+            errorBuilder: (context, error, stackTrace) => Image.network(
+              'https://example.com/default_image.png', // Replace with your default image URL
+              fit: BoxFit.fill,
+            ),
+          ),
           ElevatedButton(
               onPressed: () {
-                // Reference;
+                _pickImge();
               },
               child: const Text('Upload Image')),
           const SizedBox(height: 30.0),
