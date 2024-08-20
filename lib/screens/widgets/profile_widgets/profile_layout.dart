@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -78,7 +80,8 @@ class _ProfileLayoutState extends State<ProfileLayout> {
           ),
           ElevatedButton(
               onPressed: () {
-                _pickImge();
+                print('click');
+                selectFile();
               },
               child: const Text('Upload Image')),
           const SizedBox(height: 30.0),
@@ -147,4 +150,29 @@ class _ProfileLayoutState extends State<ProfileLayout> {
   //     context.go('/login');
   //   }
   // }
+
+  Future<void> selectFile() async {
+    print('click');
+    final result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      final fileBytes = result.files.first.bytes;
+      final fileName = result.files.first.name;
+
+      // อัปโหลดไฟล์ไปยัง Firebase Storage
+      await uploadFile(fileBytes, fileName);
+    }
+  }
+
+  Future<void> uploadFile(Uint8List? fileBytes, String fileName) async {
+    if (fileBytes != null) {
+      try {
+        final storageRef =
+            FirebaseStorage.instance.ref().child('uploads/$fileName');
+        await storageRef.putData(fileBytes);
+        print('อัปโหลดสำเร็จ');
+      } catch (e) {
+        print('เกิดข้อผิดพลาด: $e');
+      }
+    }
+  }
 }
