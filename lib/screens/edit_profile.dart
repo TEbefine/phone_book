@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:phone_book/cubit/update_name_cubit.dart';
-import 'package:phone_book/function/authentication.dart';
+import 'package:phone_book/cubit/update_cubit/update_name_cubit.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -43,17 +41,5 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
     );
-  }
-
-  Future<void> changeName(BuildContext context, String newName) async {
-    await UserRepository.instance.changeUserName(newName);
-
-    _nameController.clear();
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('User name updated successfully!')),
-    );
-
-    context.go('/profile');
   }
 }

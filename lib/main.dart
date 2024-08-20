@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:phone_book/cubit/update_name_cubit.dart';
+import 'package:phone_book/cubit/update_cubit/update_name_cubit.dart';
 import 'package:phone_book/function/authentication.dart';
 import 'package:phone_book/router/router.dart';
 
