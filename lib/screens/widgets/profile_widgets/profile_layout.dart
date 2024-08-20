@@ -152,13 +152,11 @@ class _ProfileLayoutState extends State<ProfileLayout> {
   // }
 
   Future<void> selectFile() async {
-    print('click');
     final result = await FilePicker.platform.pickFiles();
     if (result != null) {
       final fileBytes = result.files.first.bytes;
       final fileName = result.files.first.name;
 
-      // อัปโหลดไฟล์ไปยัง Firebase Storage
       await uploadFile(fileBytes, fileName);
     }
   }
@@ -169,9 +167,9 @@ class _ProfileLayoutState extends State<ProfileLayout> {
         final storageRef =
             FirebaseStorage.instance.ref().child('uploads/$fileName');
         await storageRef.putData(fileBytes);
-        print('อัปโหลดสำเร็จ');
+        print('Upload Successful');
       } catch (e) {
-        print('เกิดข้อผิดพลาด: $e');
+        print('Error occurred: $e');
       }
     }
   }
