@@ -15,10 +15,11 @@ class UpdateNameCubit extends Cubit<UpdateNameState> {
 
     try {
       await UserRepository.instance.changeUserName(newName);
-      router.push('/profile');
       emit(UpdateNameSuccess(newName: newName));
     } catch (e) {
       emit(UpdateNameFailure(error: e.toString()));
+    } finally {
+      router.go('/profile');
     }
   }
 }
