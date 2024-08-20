@@ -30,4 +30,14 @@ class RegisterUserCubit extends Cubit<RegisterUserState> {
       emit(RegisterUserFailure(error: e.toString()));
     }
   }
+
+  Future<void> deleteUser(String password) async {
+    emit(DeleteUserLoading());
+    try {
+      await UserRepository.instance.deleteUser(password);
+      router.go('/login');
+    } catch (e) {
+      emit(DeleteUserFailure(error: e.toString()));
+    }
+  }
 }

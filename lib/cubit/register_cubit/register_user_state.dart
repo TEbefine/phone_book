@@ -21,3 +21,16 @@ final class RegisterUserFailure extends RegisterUserState {
   @override
   List<Object> get props => [error];
 }
+
+final class DeleteUserLoading extends RegisterUserState {}
+
+final class DeleteUserSuccess extends RegisterUserState {}
+
+final class DeleteUserFailure extends RegisterUserState {
+  final String error;
+
+  const DeleteUserFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}

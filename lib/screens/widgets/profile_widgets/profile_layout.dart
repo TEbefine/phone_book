@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_book/cubit/login_out_cubit/login_out_cubit.dart';
+import 'package:phone_book/cubit/register_cubit/register_user_cubit.dart';
 import 'package:phone_book/function/authentication.dart';
 
 class ProfileLayout extends StatefulWidget {
@@ -60,7 +61,9 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                             child: const Text('Cancel'),
                           ),
                           TextButton(
-                            onPressed: () => deleteUser(context),
+                            onPressed: () => context
+                                .read<RegisterUserCubit>()
+                                .deleteUser(_passwordController.text),
                             child: const Text('Delete'),
                           ),
                         ],
@@ -80,17 +83,17 @@ class _ProfileLayoutState extends State<ProfileLayout> {
         ]);
   }
 
-  Future<void> deleteUser(BuildContext context) async {
-    try {
-      await UserRepository.instance.deleteUser(_passwordController.text);
-    } catch (e) {
-      print('Error reauthenticating or deleting user: ${e.toString()}');
-    } finally {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('User deleted successfully.')),
-      );
+  // Future<void> deleteUser(BuildContext context) async {
+  //   try {
+  //     await UserRepository.instance.deleteUser(_passwordController.text);
+  //   } catch (e) {
+  //     print('Error reauthenticating or deleting user: ${e.toString()}');
+  //   } finally {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text('User deleted successfully.')),
+  //     );
 
-      context.go('/login');
-    }
-  }
+  //     context.go('/login');
+  //   }
+  // }
 }

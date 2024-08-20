@@ -23,16 +23,12 @@ class UserRepository {
   }
 
   Future<void> registerUser(String email, String password) async {
-    try {
-      final userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      _user = userCredential.user;
-    } catch (e) {
-      rethrow;
-    }
+    final userCredential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    _user = userCredential.user;
   }
 
   Future<void> signInUser(String email, String password) async {
@@ -46,33 +42,21 @@ class UserRepository {
   }
 
   Future<void> signOut() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      _user = null;
-    } catch (e) {
-      rethrow;
-    }
+    await FirebaseAuth.instance.signOut();
+    _user = null;
   }
 
   Future<void> changeUserName(String newName) async {
-    try {
-      await FirebaseAuth.instance.currentUser?.updateDisplayName(newName);
-    } catch (e) {
-      throw Exception('Failed to update user name: $e');
-    }
+    await FirebaseAuth.instance.currentUser?.updateDisplayName(newName);
   }
 
   Future<void> deleteUser(String password) async {
-    try {
-      await FirebaseAuth.instance.currentUser?.reauthenticateWithCredential(
-          EmailAuthProvider.credential(
-              email: FirebaseAuth.instance.currentUser!.email!,
-              password: password));
-      await user?.delete();
-      _user = null;
-    } catch (e) {
-      rethrow;
-    }
+    await FirebaseAuth.instance.currentUser?.reauthenticateWithCredential(
+        EmailAuthProvider.credential(
+            email: FirebaseAuth.instance.currentUser!.email!,
+            password: password));
+    await user?.delete();
+    _user = null;
   }
 
   User? get user => _user;
