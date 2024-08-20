@@ -10,7 +10,7 @@ void main() async {
   await UserRepository.instance.init();
 
   runApp(BlocProvider(
-    create: (context) => UpdateNameCubit(),
+    create: (context) => UpdateNameCubit(router),
     child: const MyApp(),
   ));
 }
