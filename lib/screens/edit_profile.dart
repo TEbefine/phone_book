@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:phone_book/cubit/update_name_cubit.dart';
 import 'package:phone_book/function/authentication.dart';
 
 class EditProfile extends StatefulWidget {
@@ -26,7 +28,11 @@ class _EditProfileState extends State<EditProfile> {
               onSubmitted: (value) => changeName(context, _nameController.text),
             ),
             ElevatedButton(
-              onPressed: () => changeName(context, _nameController.text),
+              onPressed: () {
+                context
+                    .read<UpdateNameCubit>()
+                    .updateName(_nameController.text);
+              },
               child: const Text('Change Name'),
             ),
           ],

@@ -58,7 +58,7 @@ class UserRepository {
     try {
       await FirebaseAuth.instance.currentUser?.updateDisplayName(newName);
     } catch (e) {
-      rethrow;
+      throw Exception('Failed to update user name: $e');
     }
   }
 
