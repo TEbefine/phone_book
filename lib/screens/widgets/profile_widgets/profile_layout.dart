@@ -19,16 +19,22 @@ class _ProfileLayoutState extends State<ProfileLayout> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          CircleAvatar(
-            radius: 50.0,
-            backgroundImage: NetworkImage(UserRepository
-                    .instance.user?.photoURL ??
-                'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
-          ),
-          const SizedBox(height: 10.0),
-          Text(
-            UserRepository.instance.user?.displayName ?? 'User Name',
-          ),
+          // CircleAvatar(
+          //   radius: 50.0,
+          //   backgroundImage: NetworkImage(UserRepository
+          //           .instance.user?.photoURL ??
+          //       'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
+          // ),
+          // const SizedBox(height: 10.0),
+          // Text(
+          //   UserRepository.instance.user?.displayName ?? 'User Name',
+          // ),
+
+          ElevatedButton(
+              onPressed: () {
+                // Reference;
+              },
+              child: const Text('Upload Image')),
           const SizedBox(height: 30.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
