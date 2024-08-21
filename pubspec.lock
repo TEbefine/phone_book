@@ -329,7 +329,7 @@ packages:
     source: hosted
     version: "8.0.2"
   image_cropper_for_web:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image_cropper_for_web
       sha256: "34256c8fb7fcb233251787c876bb37271744459b593a948a2db73caa323034d0"
