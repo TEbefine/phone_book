@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:phone_book/cubit/login_out_cubit/login_out_cubit.dart';
 import 'package:phone_book/cubit/register_cubit/register_user_cubit.dart';
 import 'package:phone_book/function/authentication.dart';
@@ -18,39 +19,7 @@ class ProfileLayout extends StatefulWidget {
 }
 
 class _ProfileLayoutState extends State<ProfileLayout> {
-  File? _pickedImage;
-  Uint8List? webImage = Uint8List(8);
-
   final TextEditingController _passwordController = TextEditingController();
-
-  Future<void> _pickImge() async {
-    if (!kIsWeb) {
-      final ImagePicker _picker = ImagePicker();
-      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        var selected = File(image.path);
-        setState(() {
-          _pickedImage = selected;
-        });
-      } else {
-        print('No image has been picked');
-      }
-    } else if (kIsWasm) {
-      final ImagePicker _picker = ImagePicker();
-      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        var f = await image.readAsBytes();
-        setState(() {
-          webImage = f;
-          _pickedImage = File('a');
-        });
-      } else {
-        print('No image has been picked');
-      }
-    } else {
-      print('some thing went wrong');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,30 +27,37 @@ class _ProfileLayoutState extends State<ProfileLayout> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          // CircleAvatar(
-          //   radius: 50.0,
-          //   backgroundImage: NetworkImage(UserRepository
-          //           .instance.user?.photoURL ??
-          //       'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
-          // ),
-          // const SizedBox(height: 10.0),
-          // Text(
-          //   UserRepository.instance.user?.displayName ?? 'User Name',
-          // ),
-          Image(
-            image: _pickedImage != null
-                ? FileImage(_pickedImage!)
-                : MemoryImage(webImage!),
-            fit: BoxFit.fill,
-            errorBuilder: (context, error, stackTrace) => Image.network(
-              'https://example.com/default_image.png', // Replace with your default image URL
-              fit: BoxFit.fill,
-            ),
+          CircleAvatar(
+            radius: 50.0,
+            backgroundImage: NetworkImage(UserRepository
+                    .instance.user?.photoURL ??
+                'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
+            onBackgroundImageError: (exception, stackTrace) {
+              print('Error loading image: $exception');
+
+              // showDialog(
+              //   context: context,
+              //   builder: (context) => AlertDialog(
+              //     title: Text('เกิดข้อผิดพลาด'),
+              //     content: Text('ไม่สามารถโหลดรูปภาพได้ กรุณาลองใหม่อีกครั้ง'),
+              //   ),
+              // );
+            },
+          ),
+          const SizedBox(height: 10.0),
+          Text(
+            UserRepository.instance.user?.displayName ?? 'User Name',
           ),
           ElevatedButton(
-              onPressed: () {
-                print('click');
-                selectFile();
+              onPressed: () async {
+                // ให้ผู้ใช้เลือกและครอปรูปภาพ (หรือใช้งาน code selectAndCropFile)
+                final result = await FilePicker.platform.pickFiles();
+                if (result != null) {
+                  final fileBytes = result.files.first.bytes;
+                  final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+
+                  await changeUserProfilePicture(fileBytes!, userId);
+                }
               },
               child: const Text('Upload Image')),
           const SizedBox(height: 30.0),
@@ -137,40 +113,73 @@ class _ProfileLayoutState extends State<ProfileLayout> {
         ]);
   }
 
-  // Future<void> deleteUser(BuildContext context) async {
-  //   try {
-  //     await UserRepository.instance.deleteUser(_passwordController.text);
-  //   } catch (e) {
-  //     print('Error reauthenticating or deleting user: ${e.toString()}');
-  //   } finally {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('User deleted successfully.')),
-  //     );
+  Future<String?> uploadProfilePicture(
+      Uint8List fileBytes, String userId) async {
+    try {
+      final storageRef = FirebaseStorage.instance.ref().child(userId);
 
-  //     context.go('/login');
+      final metadata = SettableMetadata(contentType: 'image/jpeg');
+      await storageRef.putData(fileBytes, metadata);
+      final downloadUrl = await storageRef.getDownloadURL();
+      return downloadUrl; // ส่งคืน URL ของรูปภาพที่อัปโหลด
+    } catch (e) {
+      print('Error occurred: $e');
+      return null;
+    }
+  }
+
+  Future<void> updateProfilePicture(String downloadUrl) async {
+    try {
+      final _user = await FirebaseAuth.instance.currentUser;
+      if (_user != null) {
+        await _user.updatePhotoURL(downloadUrl);
+        await _user
+            .reload(); // รีโหลดข้อมูลของผู้ใช้เพื่อให้แน่ใจว่าการเปลี่ยนแปลงถูกอัปเดต
+        print('update profile picture successful');
+      }
+    } catch (e) {
+      print('Error update the profile picture: $e');
+    }
+  }
+
+  Future<void> changeUserProfilePicture(
+      Uint8List fileBytes, String userId) async {
+    // อัปโหลดรูปภาพไปยัง Firebase Storage
+    try {
+      String? downloadUrl = await uploadProfilePicture(fileBytes, userId);
+
+      if (downloadUrl != null) {
+        // อัปเดต URL รูปภาพใน Firebase Authentication
+        await updateProfilePicture(downloadUrl);
+        print('Able to upload');
+      } else {
+        print('Unable to upload');
+      }
+    } catch (e) {
+      print('Error changing the profile picture: $e');
+    }
+  }
+
+  // Future<void> selectFile() async {
+  //   final result = await FilePicker.platform.pickFiles();
+  //   if (result != null) {
+  //     final fileBytes = result.files.first.bytes;
+  //     final fileName = result.files.first.name;
+
+  //     await uploadFile(fileBytes, fileName);
   //   }
   // }
 
-  Future<void> selectFile() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      final fileBytes = result.files.first.bytes;
-      final fileName = result.files.first.name;
-
-      await uploadFile(fileBytes, fileName);
-    }
-  }
-
-  Future<void> uploadFile(Uint8List? fileBytes, String fileName) async {
-    if (fileBytes != null) {
-      try {
-        final storageRef =
-            FirebaseStorage.instance.ref().child('uploads/$fileName');
-        await storageRef.putData(fileBytes);
-        print('Upload Successful');
-      } catch (e) {
-        print('Error occurred: $e');
-      }
-    }
-  }
+  // Future<void> uploadFile(Uint8List? fileBytes, String fileName) async {
+  //   if (fileBytes != null) {
+  //     try {
+  //       final storageRef =
+  //           FirebaseStorage.instance.ref().child('uploads/$fileName');
+  //       await storageRef.putData(fileBytes);
+  //       print('Upload Successful');
+  //     } catch (e) {
+  //       print('Error occurred: $e');
+  //     }
+  //   }
+  // }
 }
