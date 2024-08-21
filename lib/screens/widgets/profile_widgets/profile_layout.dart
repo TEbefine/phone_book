@@ -23,6 +23,7 @@ class _ProfileLayoutState extends State<ProfileLayout> {
 
   @override
   Widget build(BuildContext context) {
+    print(UserRepository.instance.user?.photoURL);
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
