@@ -50,6 +50,11 @@ class UserRepository {
     await FirebaseAuth.instance.currentUser?.updateDisplayName(newName);
   }
 
+  Future<void> updateProfilePicture(String downloadUrl) async {
+    await FirebaseAuth.instance.currentUser?.updatePhotoURL(downloadUrl);
+    await _user?.reload();
+  }
+
   Future<void> deleteUser(String password) async {
     await FirebaseAuth.instance.currentUser?.reauthenticateWithCredential(
         EmailAuthProvider.credential(

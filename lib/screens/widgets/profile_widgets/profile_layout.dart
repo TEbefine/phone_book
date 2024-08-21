@@ -6,9 +6,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:phone_book/cubit/login_out_cubit/login_out_cubit.dart';
 import 'package:phone_book/cubit/register_cubit/register_user_cubit.dart';
+import 'package:phone_book/cubit/update_%20profile_cubit/update_photo_cubit.dart';
 import 'package:phone_book/function/authentication.dart';
 
 class ProfileLayout extends StatefulWidget {
@@ -35,14 +35,6 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                 'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
             onBackgroundImageError: (exception, stackTrace) {
               print('Error loading image: $exception');
-
-              // showDialog(
-              //   context: context,
-              //   builder: (context) => AlertDialog(
-              //     title: Text('เกิดข้อผิดพลาด'),
-              //     content: Text('ไม่สามารถโหลดรูปภาพได้ กรุณาลองใหม่อีกครั้ง'),
-              //   ),
-              // );
             },
           ),
           const SizedBox(height: 10.0),
@@ -50,16 +42,19 @@ class _ProfileLayoutState extends State<ProfileLayout> {
             UserRepository.instance.user?.displayName ?? 'User Name',
           ),
           ElevatedButton(
-              onPressed: () async {
-                // ให้ผู้ใช้เลือกและครอปรูปภาพ (หรือใช้งาน code selectAndCropFile)
-                final result = await FilePicker.platform.pickFiles();
-                if (result != null) {
-                  final fileBytes = result.files.first.bytes;
-                  final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-
-                  await changeUserProfilePicture(fileBytes!, userId);
-                }
+              onPressed: () {
+                context.read<UpdatePhotoCubit>().changeUserProfilePicture();
               },
+              // () async {
+              //   // ให้ผู้ใช้เลือกและครอปรูปภาพ (หรือใช้งาน code selectAndCropFile)
+              //   final result = await FilePicker.platform.pickFiles();
+              //   if (result != null) {
+              //     final fileBytes = result.files.first.bytes;
+              //     final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+
+              //     await changeUserProfilePicture(fileBytes!, userId);
+              //   }
+              // },
               child: const Text('Upload Image')),
           const SizedBox(height: 30.0),
           Row(
@@ -134,8 +129,7 @@ class _ProfileLayoutState extends State<ProfileLayout> {
       final _user = await FirebaseAuth.instance.currentUser;
       if (_user != null) {
         await _user.updatePhotoURL(downloadUrl);
-        await _user
-            .reload(); // รีโหลดข้อมูลของผู้ใช้เพื่อให้แน่ใจว่าการเปลี่ยนแปลงถูกอัปเดต
+        await _user.reload();
         print('update profile picture successful');
       }
     } catch (e) {
@@ -160,27 +154,4 @@ class _ProfileLayoutState extends State<ProfileLayout> {
       print('Error changing the profile picture: $e');
     }
   }
-
-  // Future<void> selectFile() async {
-  //   final result = await FilePicker.platform.pickFiles();
-  //   if (result != null) {
-  //     final fileBytes = result.files.first.bytes;
-  //     final fileName = result.files.first.name;
-
-  //     await uploadFile(fileBytes, fileName);
-  //   }
-  // }
-
-  // Future<void> uploadFile(Uint8List? fileBytes, String fileName) async {
-  //   if (fileBytes != null) {
-  //     try {
-  //       final storageRef =
-  //           FirebaseStorage.instance.ref().child('uploads/$fileName');
-  //       await storageRef.putData(fileBytes);
-  //       print('Upload Successful');
-  //     } catch (e) {
-  //       print('Error occurred: $e');
-  //     }
-  //   }
-  // }
 }
