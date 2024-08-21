@@ -21,21 +21,54 @@ class _ProfileLayoutState extends State<ProfileLayout> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          CircleAvatar(
-            radius: 50.0,
-            backgroundImage: NetworkImage(UserRepository
-                    .instance.user?.photoURL ??
-                'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
+          Stack(
+            children: [
+              // CircleAvatar
+              CircleAvatar(
+                radius: 50.0,
+                backgroundImage: NetworkImage(UserRepository
+                        .instance.user?.photoURL ??
+                    'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
+              ),
+
+              // Positioned button
+              Positioned(
+                right: -10,
+                bottom: -10,
+                child: GestureDetector(
+                  onTap: () {
+                    context.read<UpdatePhotoCubit>().changeUserProfilePicture();
+                  },
+                  child: Container(
+                    width: 40.0, // Adjust size as needed
+                    height: 40.0, // Adjust size as needed
+                    decoration: const BoxDecoration(
+                      color: Colors.white, // Background color of the button
+                      shape: BoxShape.circle, // Make it circular
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26, // Shadow color
+                          blurRadius: 4.0, // Shadow blur radius
+                          offset: Offset(2.0, 2.0), // Shadow offset
+                        ),
+                      ],
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.black, // Icon color
+                        size: 24.0, // Icon size
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-          const SizedBox(height: 10.0),
+          const SizedBox(height: 20.0),
           Text(
             UserRepository.instance.user?.displayName ?? 'User Name',
           ),
-          ElevatedButton(
-              onPressed: () {
-                context.read<UpdatePhotoCubit>().changeUserProfilePicture();
-              },
-              child: const Text('Upload Image')),
           const SizedBox(height: 30.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
