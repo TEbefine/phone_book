@@ -13,12 +13,22 @@ class UpdatePhotoCubit extends Cubit<UpdatePhotoState> {
   Future<void> changeUserProfilePicture() async {
     emit(UpdatePhotoLoading());
 
-    final pickFile = await FilePicker.platform.pickFiles();
-    if (pickFile != null) {
-      final fileBytes = pickFile.files.first.bytes;
+    final pickFile = await FilePicker.platform.pickFiles(type: FileType.image);
+    if (pickFile != null && pickFile.files.isNotEmpty) {
+      final file = pickFile.files.first;
       final userId = UserRepository.instance.user?.uid ?? '';
 
-      String? downloadUrl = await uploadProfilePicture(fileBytes!, userId);
+      final fileExtension = file.extension?.toLowerCase();
+      if (fileExtension != 'jpg' &&
+          fileExtension != 'jpeg' &&
+          fileExtension != 'png' &&
+          fileExtension != 'gif') {
+        emit(const UpdatePhotoFailure(
+            error: "Please select a valid Image file"));
+        return;
+      }
+
+      String? downloadUrl = await uploadProfilePicture(file.bytes!, userId);
       if (downloadUrl != null) {
         try {
           await UserRepository.instance.updateProfilePicture(downloadUrl);
@@ -28,7 +38,7 @@ class UpdatePhotoCubit extends Cubit<UpdatePhotoState> {
         }
       }
     } else {
-      emit(const UpdatePhotoFailure(error: "Please select a file"));
+      emit(const UpdatePhotoFailure(error: "Please select image a file"));
       return;
     }
   }

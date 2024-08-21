@@ -42,12 +42,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (state is UpdateNameSuccess) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('User name updated successfully!'),
+                    content: Text(
+                      'User name updated successfully!',
+                    ),
+                    backgroundColor: Colors.green,
+                    behavior: SnackBarBehavior.floating,
+                    elevation: 0,
                   ),
                 );
               } else if (state is UpdateNameFailure) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(state.error)));
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(state.error),
+                  backgroundColor: Color.fromARGB(128, 255, 0, 0),
+                  behavior: SnackBarBehavior.floating,
+                  elevation: 0,
+                ));
               }
             },
           ),
@@ -57,11 +66,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('User Profile updated successfully!'),
+                    backgroundColor: Colors.green,
+                    behavior: SnackBarBehavior.floating,
+                    elevation: 0,
                   ),
                 );
               } else if (state is UpdatePhotoFailure) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(state.error)));
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(state.error),
+                  backgroundColor: Color.fromARGB(128, 255, 0, 0),
+                  behavior: SnackBarBehavior.floating,
+                  elevation: 0,
+                ));
               }
             },
           ),
