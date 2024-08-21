@@ -33,7 +33,7 @@ class _ProfileLayoutState extends State<ProfileLayout> {
 
               // Positioned button
               Positioned(
-                right: -10,
+                right: -8,
                 bottom: -10,
                 child: GestureDetector(
                   onTap: () {
@@ -53,13 +53,27 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                         ),
                       ],
                     ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.black, // Icon color
-                        size: 24.0, // Icon size
-                      ),
-                    ),
+                    child: Center(child:
+                        BlocBuilder<UpdatePhotoCubit, UpdatePhotoState>(
+                            builder: (context, state) {
+                      if (state is UpdatePhotoLoading) {
+                        return const Center(
+                            child: SizedBox(
+                          width: 20.0, // Set the desired width
+                          height: 20.0, // Set the desired height
+                          child: CircularProgressIndicator(
+                            strokeWidth:
+                                2.0, // Adjust the stroke width if needed
+                          ),
+                        ));
+                      } else {
+                        return const Icon(
+                          Icons.camera_alt,
+                          color: Colors.black, // Icon color
+                          size: 24.0, // Icon size
+                        );
+                      }
+                    })),
                   ),
                 ),
               )
