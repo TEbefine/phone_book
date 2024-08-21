@@ -14,6 +14,7 @@ class UpdatePhotoCubit extends Cubit<UpdatePhotoState> {
     emit(UpdatePhotoLoading());
 
     final pickFile = await FilePicker.platform.pickFiles(type: FileType.image);
+
     if (pickFile != null && pickFile.files.isNotEmpty) {
       final file = pickFile.files.first;
       final userId = UserRepository.instance.user?.uid ?? '';

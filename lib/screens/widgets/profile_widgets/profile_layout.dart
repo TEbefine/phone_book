@@ -36,9 +36,6 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                 right: -8,
                 bottom: -10,
                 child: GestureDetector(
-                  onTap: () {
-                    context.read<UpdatePhotoCubit>().changeUserProfilePicture();
-                  },
                   child: Container(
                     width: 40.0, // Adjust size as needed
                     height: 40.0, // Adjust size as needed
@@ -67,10 +64,15 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                           ),
                         ));
                       } else {
-                        return const Icon(
-                          Icons.camera_alt,
-                          color: Colors.black, // Icon color
-                          size: 24.0, // Icon size
+                        return IconButton(
+                          icon: Icon(
+                            Icons.camera_alt,
+                            color: Colors.black,
+                            size: 24.0,
+                          ),
+                          onPressed: () => context
+                              .read<UpdatePhotoCubit>()
+                              .changeUserProfilePicture(),
                         );
                       }
                     })),
