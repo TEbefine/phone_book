@@ -13,9 +13,9 @@ class UpdatePhotoCubit extends Cubit<UpdatePhotoState> {
   Future<void> changeUserProfilePicture() async {
     emit(UpdatePhotoLoading());
 
-    final _pickFile = await FilePicker.platform.pickFiles();
-    if (_pickFile != null) {
-      final fileBytes = _pickFile.files.first.bytes;
+    final pickFile = await FilePicker.platform.pickFiles();
+    if (pickFile != null) {
+      final fileBytes = pickFile.files.first.bytes;
       final userId = UserRepository.instance.user?.uid ?? '';
 
       String? downloadUrl = await uploadProfilePicture(fileBytes!, userId);
