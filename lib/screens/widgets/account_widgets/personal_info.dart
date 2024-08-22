@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phone_book/screens/widgets/account_widgets/personal_info/personal_username.dart';
+import 'package:phone_book/screens/widgets/account_widgets/personal_info/photo_username.dart';
 import 'package:phone_book/screens/widgets/account_widgets/personal_info/submit_button.dart';
 
 class PersonalInfo extends StatefulWidget {
@@ -49,6 +50,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
               ),
               const SizedBox(height: 10.0),
               const PersonalUsername(),
+              Container(
+                height: 2.0, // Height of the underline
+                color: Colors.grey.withOpacity(0.1),
+                // Color of the underline
+              ),
+              const SizedBox(height: 25.0),
+              const PhotoUsername(),
+              const SizedBox(height: 20.0),
               const SubmitButton(),
             ],
           ),
