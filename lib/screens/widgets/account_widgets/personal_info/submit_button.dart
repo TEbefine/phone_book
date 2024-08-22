@@ -39,9 +39,12 @@ class _SubmitButtonState extends State<SubmitButton> {
                     vertical: 2.0), // Padding inside the button
                 elevation: 0, // Remove shadow for a minimalistic look
               ),
-              child: const Text(
+              child: Text(
                 'Save',
-                style: TextStyle(fontSize: 12.0),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 12.0,
+                      color: Colors.white,
+                    ),
               ),
             ),
           ),

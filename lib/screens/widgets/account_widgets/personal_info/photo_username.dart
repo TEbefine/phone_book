@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phone_book/function/authentication.dart';
+import 'package:phone_book/screens/widgets/account_widgets/personal_info/photo_username/drag_and_drop.dart';
 
 class PhotoUsername extends StatelessWidget {
   const PhotoUsername({super.key});
@@ -41,6 +42,10 @@ class PhotoUsername extends StatelessWidget {
                   .instance.user?.photoURL ??
               'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
         ),
+        const SizedBox(
+          width: 20,
+        ),
+        const DragAndDrop(),
       ],
     );
   }
