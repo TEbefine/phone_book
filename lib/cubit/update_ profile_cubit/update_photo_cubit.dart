@@ -31,9 +31,10 @@ class UpdatePhotoCubit extends Cubit<UpdatePhotoState> {
         final croppedFile = await ImageCropper().cropImage(
           sourcePath: pickedFile.xFiles.first.path,
           uiSettings: [
-            WebUiSettings(
-              context: context,
-            ),
+            if (context.mounted)
+              WebUiSettings(
+                context: context,
+              ),
           ],
         );
 
