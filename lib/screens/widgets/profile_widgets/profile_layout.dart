@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:phone_book/cubit/login_out_cubit/login_out_cubit.dart';
 import 'package:phone_book/cubit/register_cubit/register_user_cubit.dart';
 import 'package:phone_book/cubit/update_%20profile_cubit/update_photo_cubit.dart';
@@ -16,35 +14,6 @@ class ProfileLayout extends StatefulWidget {
 
 class _ProfileLayoutState extends State<ProfileLayout> {
   final TextEditingController _passwordController = TextEditingController();
-
-  final ImagePicker _picker = ImagePicker();
-
-  Future<void> _pickAndCropImage() async {
-    // เลือกภาพจากแกลเลอรี
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      // ครอบภาพที่เลือก
-      final croppedFile = await ImageCropper().cropImage(
-        sourcePath: pickedFile.path,
-        uiSettings: [
-          WebUiSettings(
-            context: context,
-          ),
-        ],
-      );
-
-      if (croppedFile != null) {
-        // แสดงผลลัพธ์ของภาพที่ครอบ
-        print("Cropped Image Path: ${croppedFile.path}");
-        // ที่นี่สามารถอัปโหลดภาพไปยัง Firebase ได้
-      } else {
-        print("Cropping was canceled");
-      }
-    } else {
-      print("No image selected");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +50,9 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                         ),
                       ],
                     ),
-                    child: Center(child:
-                        BlocBuilder<UpdatePhotoCubit, UpdatePhotoState>(
+                    child: Center(
+                        child: BlocBuilder<UpdatePhotoCubit, UpdatePhotoState>(
+                            // bloc: BlocProvider.of<UpdatePhotoCubit>(context),
                             builder: (context, state) {
                       if (state is UpdatePhotoLoading) {
                         return const Center(
@@ -103,7 +73,7 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                           ),
                           onPressed: () => context
                               .read<UpdatePhotoCubit>()
-                              .changeUserProfilePicture(),
+                              .pickAndCropImage(context),
                         );
                       }
                     })),
@@ -165,10 +135,6 @@ class _ProfileLayoutState extends State<ProfileLayout> {
                 child: const Text('Logout'),
               ),
             ],
-          ),
-          ElevatedButton(
-            onPressed: _pickAndCropImage,
-            child: const Text('Pick and Crop Image'),
           ),
         ]);
   }
