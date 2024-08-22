@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_book/cubit/personal_info_btu_cubit/button_cubit.dart';
-import 'package:phone_book/main.dart';
 
 import '../../../../cubit/username_controller.dart';
 
