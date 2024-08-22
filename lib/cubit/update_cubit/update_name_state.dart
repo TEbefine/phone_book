@@ -11,7 +11,14 @@ final class UpdateNameInitial extends UpdateNameState {}
 
 final class UpdateNameLoading extends UpdateNameState {}
 
-final class UpdateNameSuccess extends UpdateNameState {}
+final class UpdateNameSuccess extends UpdateNameState {
+  final String success;
+
+  const UpdateNameSuccess({required this.success});
+
+  @override
+  List<Object> get props => [success];
+}
 
 final class UpdateNameFailure extends UpdateNameState {
   final String error;

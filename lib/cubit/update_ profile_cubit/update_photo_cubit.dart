@@ -61,7 +61,8 @@ class UpdatePhotoCubit extends Cubit<UpdatePhotoState> {
     if (downloadUrl != null) {
       try {
         await UserRepository.instance.updateProfilePicture(downloadUrl);
-        emit(UpdatePhotoSuccess());
+        emit(const UpdatePhotoSuccess(
+            success: 'User Profile updated successfully!'));
       } catch (e) {
         emit(UpdatePhotoFailure(error: e.toString()));
       }
