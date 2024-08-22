@@ -29,6 +29,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme: ThemeData(
+          fontFamily: 'Roboto',
+          textTheme: const TextTheme(
+            headlineLarge: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 36.0,
+                fontWeight: FontWeight.bold),
+            bodyLarge: TextStyle(fontFamily: 'Roboto', fontSize: 14.0),
+          )),
       debugShowCheckedModeBanner: false,
       routerConfig: router,
     );

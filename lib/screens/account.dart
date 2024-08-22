@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_book/cubit/update_%20profile_cubit/update_photo_cubit.dart';
 import 'package:phone_book/cubit/update_cubit/update_name_cubit.dart';
+import 'package:phone_book/screens/widgets/account_widgets/main_account.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -15,17 +16,22 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: MultiBlocListener(listeners: [
-      BlocListener<UpdateNameCubit, UpdateNameState>(
-        listener: (context, state) {
-          _showSnackBar(context, state);
-        },
-      ),
-      BlocListener<UpdatePhotoCubit, UpdatePhotoState>(
-          listener: (constext, state) {
-        _showSnackBar(context, state);
-      })
-    ], child: const Scaffold()));
+      body: MultiBlocListener(
+          listeners: [
+            BlocListener<UpdateNameCubit, UpdateNameState>(
+              listener: (context, state) {
+                _showSnackBar(context, state);
+              },
+            ),
+            BlocListener<UpdatePhotoCubit, UpdatePhotoState>(
+                listener: (constext, state) {
+              _showSnackBar(context, state);
+            })
+          ],
+          child: const Column(
+            children: <Widget>[MainAccountScreen()],
+          )),
+    );
   }
 }
 
