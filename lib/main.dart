@@ -25,7 +25,6 @@ void main() async {
       BlocProvider(create: (context) => ButtonCubit()),
       BlocProvider(create: (context) => UsernameControllerCubit()),
       BlocProvider(create: (context) => NewLoginCubit()),
-      // ChangeNotifierProvider(create: (context) => UserModel()),
     ],
     child: const MyApp(),
   ));
@@ -52,14 +51,34 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Test
-// class UserModel extends ChangeNotifier {
-//   String _name = '';
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
-//   String get name => _name;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.network(
+            'https://da28rauy2a860.cloudfront.net/completehome/wp-content/uploads/2021/03/03114534/Millbrook-Homes-58series-1.jpg',
+            width: 200.0, // Set desired width
+            height: 200.0,
+          ),
+          const SizedBox(
+            width: 40.0,
+          ),
+          Image.network(
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Blank_page_intentionally_end_of_book.jpg/800px-Blank_page_intentionally_end_of_book.jpg',
+            width: 200.0, // Set desired width
+            height: 200.0,
+          ),
+        ],
+      ),
+    ));
+  }
+}
 
-//   void updateName(String newName) {
-//     _name = newName;
-//     notifyListeners();
-//   }
-// }
+//https://da28rauy2a860.cloudfront.net/completehome/wp-content/uploads/2021/03/03114534/Millbrook-Homes-58series-1.jpg
+

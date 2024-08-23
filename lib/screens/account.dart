@@ -4,6 +4,7 @@ import 'package:phone_book/cubit/update_%20profile_cubit/update_photo_cubit.dart
 import 'package:phone_book/cubit/update_cubit/update_name_cubit.dart';
 import 'package:phone_book/screens/widgets/account_widgets/main_account.dart';
 import 'package:phone_book/screens/widgets/account_widgets/personal_info.dart';
+import 'package:phone_book/screens/widgets/account_widgets/user_bar.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -37,6 +38,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 height: 40,
               ),
               PersonalInfo(),
+              UserBar(),
             ],
           )),
     );

@@ -18,7 +18,7 @@ class _DragAndDropState extends State<DragAndDrop> {
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.blue,
-              width: 1.5,
+              width: 1.2,
             ),
             borderRadius: BorderRadius.circular(8.0),
           ),
