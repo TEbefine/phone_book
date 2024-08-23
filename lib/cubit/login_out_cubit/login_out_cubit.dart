@@ -10,8 +10,11 @@ class LoginOutCubit extends Cubit<LoginOutState> {
 
   Future<void> signOut() async {
     emit(LoginOutLoading());
-
-    await UserRepository.instance.signOut();
+    try {
+      await UserRepository.instance.signOut();
+    } catch (e) {
+      emit(LoginOutFailure(error: e.toString()));
+    }
 
     emit(LoginOutSuccess());
 

@@ -8,6 +8,7 @@ import 'package:phone_book/cubit/update_cubit/update_name_cubit.dart';
 import 'package:phone_book/cubit/username_controller.dart';
 import 'package:phone_book/function/authentication.dart';
 import 'package:phone_book/router/router.dart';
+// import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,7 @@ void main() async {
       BlocProvider(create: (context) => UpdatePhotoCubit()),
       BlocProvider(create: (context) => ButtonCubit()),
       BlocProvider(create: (context) => UsernameControllerCubit()),
+      // ChangeNotifierProvider(create: (context) => UserModel()),
     ],
     child: const MyApp(),
   ));
@@ -47,3 +49,15 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// Test
+// class UserModel extends ChangeNotifier {
+//   String _name = '';
+
+//   String get name => _name;
+
+//   void updateName(String newName) {
+//     _name = newName;
+//     notifyListeners();
+//   }
+// }
