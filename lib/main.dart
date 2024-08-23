@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_book/cubit/login_out_cubit/login_out_cubit.dart';
+import 'package:phone_book/cubit/new_login_cubit.dart/new_login_cubit.dart';
 import 'package:phone_book/cubit/personal_info_btu_cubit/button_cubit.dart';
 import 'package:phone_book/cubit/register_cubit/register_user_cubit.dart';
 import 'package:phone_book/cubit/update_%20profile_cubit/update_photo_cubit.dart';
@@ -23,6 +24,7 @@ void main() async {
       BlocProvider(create: (context) => UpdatePhotoCubit()),
       BlocProvider(create: (context) => ButtonCubit()),
       BlocProvider(create: (context) => UsernameControllerCubit()),
+      BlocProvider(create: (context) => NewLoginCubit()),
       // ChangeNotifierProvider(create: (context) => UserModel()),
     ],
     child: const MyApp(),

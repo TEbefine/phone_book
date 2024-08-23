@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phone_book/screens/widgets/account_widgets/personal_info/personal_username.dart';
 import 'package:phone_book/screens/widgets/account_widgets/personal_info/photo_username.dart';
 import 'package:phone_book/screens/widgets/account_widgets/personal_info/submit_button.dart';
+import 'package:phone_book/screens/widgets/account_widgets/personal_info/test_drag.dart';
 
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({super.key});
@@ -59,6 +60,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
               const PhotoUsername(),
               const SizedBox(height: 20.0),
               const SubmitButton(),
+              const TestDrag(),
             ],
           ),
         ),

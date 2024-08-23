@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:phone_book/function/authentication.dart';
-import 'package:phone_book/router/router.dart';
 
 part 'login_out_state.dart';
 
@@ -17,7 +16,5 @@ class LoginOutCubit extends Cubit<LoginOutState> {
     }
 
     emit(LoginOutSuccess());
-
-    router.go('/login');
   }
 }

@@ -5,6 +5,7 @@ import 'package:phone_book/screens/account.dart';
 import 'package:phone_book/screens/edit_profile.dart';
 import 'package:phone_book/screens/error.dart';
 import 'package:phone_book/screens/login.dart';
+import 'package:phone_book/screens/new_login.dart';
 import 'package:phone_book/screens/profile.dart';
 import 'package:phone_book/screens/register.dart';
 
@@ -23,6 +24,11 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
       path: '/login',
       builder: (BuildContext context, GoRouterState state) {
         return const LoginScreen();
+      }),
+  GoRoute(
+      path: '/new-login',
+      builder: (BuildContext context, GoRouterState state) {
+        return const NewLogin();
       }),
   GoRoute(
       path: '/register',

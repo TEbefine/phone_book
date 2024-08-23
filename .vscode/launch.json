@@ -4,9 +4,12 @@
         "name": "(DEBUG DEV MODE)",
         "request": "launch",
         "type": "dart",
+        "program": "lib/main.dart",
         "args": [
           "--web-port",
-          "8080"
+          "8080",
+          "--web-renderer",
+          "html"
         ]
       }
     ]
