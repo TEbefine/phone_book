@@ -16,7 +16,7 @@ class AuthGuardPage extends StatelessWidget {
       if (forceGoToInitialRoute) {
         context.go('/');
       } else {
-        context.go('/account');
+        context.go('/');
       }
     }
 

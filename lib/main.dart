@@ -21,7 +21,9 @@ void main() async {
 
   runApp(MultiBlocProvider(
     providers: [
-      BlocProvider(create: (context) => AuthBloc()),
+      BlocProvider(
+          create: (context) =>
+              AuthBloc(userRepository: UserRepository.instance)),
       BlocProvider(create: (context) => UpdateNameCubit(router)),
       BlocProvider(create: (context) => RegisterUserCubit()),
       BlocProvider(create: (context) => LoginOutCubit()),
