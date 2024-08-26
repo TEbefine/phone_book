@@ -38,6 +38,9 @@ class _AccountScreenState extends State<AccountScreen> {
                 height: 40,
               ),
               PersonalInfo(),
+              SizedBox(
+                height: 30.0,
+              ),
               UserBar(),
             ],
           )),
