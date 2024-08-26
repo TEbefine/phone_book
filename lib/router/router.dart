@@ -17,13 +17,6 @@ final GoRouter router = GoRouter(
       path: '/',
       builder: (BuildContext context, GoRouterState state) =>
           const HomeScreen(),
-      // {
-      //   final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-      //   if (!isLoggedIn) {
-      //     return const  LoginScreen();
-      //   }
-      //   return const ProfileScreen();
-      // },
     ),
     GoRoute(
         path: '/login',
@@ -49,13 +42,6 @@ final GoRouter router = GoRouter(
         }),
     GoRoute(
       path: '/profile',
-      // builder: (BuildContext context, GoRouterState state) {
-      //   final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-      //   if (!isLoggedIn) {
-      //     return const LoginScreen();
-      //   }
-      //   return ProfileScreen();
-      // },
       redirect: (BuildContext context, GoRouterState state) {
         final isLoggedIn = FirebaseAuth.instance.currentUser != null;
         if (!isLoggedIn) {
@@ -87,13 +73,6 @@ final GoRouter router = GoRouter(
         }
         return null;
       },
-      // builder: (BuildContext context, GoRouterState state) {
-      //   final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-      //   if (!isLoggedIn) {
-      //     return const LoginScreen();
-      //   }
-      //   return const AccountScreen();
-      // },
       builder: (BuildContext context, GoRouterState state) =>
           const AuthGuardPage(child: AccountScreen()),
     ),

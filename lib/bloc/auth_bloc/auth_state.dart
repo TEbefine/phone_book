@@ -12,12 +12,12 @@ sealed class AuthState extends Equatable {
 }
 
 final class AuthInitial extends AuthState {
-  static AuthState fromUser(User? user) {
-    if (user != null) {
-      return AuthAuthenticated(user: user);
-    }
-    return AuthUnauthenticated();
-  }
+  // static AuthState fromUser(User? user) {
+  //   if (user != null) {
+  //     return AuthAuthenticated(user: user);
+  //   }
+  //   return AuthUnauthenticated();
+  // }
 }
 
 final class AuthLoading extends AuthState {}

@@ -9,11 +9,11 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository userRepository;
 
-  AuthBloc({required this.userRepository})
-      : super(AuthInitial.fromUser(userRepository.user)) {
+  AuthBloc({required this.userRepository}) : super(AuthInitial()) {
     on<AuthLoginRequested>(_onLoginRequested);
     on<AuthCheckRequested>(_onCheckRequested);
     on<AuthLogoutRequested>(_onSignedOut);
+    add(AuthCheckRequested());
   }
 
   Future<void> _onLoginRequested(
