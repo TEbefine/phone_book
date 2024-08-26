@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_book/cubit/personal_info_btu_cubit/button_cubit.dart';
+import 'package:phone_book/cubit/update_cubit/update_name_cubit.dart';
 
 import '../../../../cubit/username_controller.dart';
 
@@ -52,6 +53,9 @@ class _PersonalUsernameState extends State<PersonalUsername> {
               onChanged: (value) {
                 context.read<ButtonCubit>().checkButtonState(value);
               },
+              onSubmitted: (value) => context
+                  .read<UpdateNameCubit>()
+                  .updateName(usernameController.text),
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                   border: const OutlineInputBorder(),
