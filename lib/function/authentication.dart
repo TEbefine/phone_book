@@ -35,7 +35,7 @@ class UserRepository {
     try {
       final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      _user = _frbInstance.currentUser;
+      _user = userCredential.user;
       return _user!;
     } catch (e) {
       rethrow;

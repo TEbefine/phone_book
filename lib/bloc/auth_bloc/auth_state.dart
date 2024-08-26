@@ -7,9 +7,18 @@ sealed class AuthState extends Equatable {
   List<Object> get props => [];
 
   bool get isAuthenticated => this is AuthAuthenticated;
+
+  bool get isInitial => this is AuthInitial;
 }
 
-final class AuthInitial extends AuthState {}
+final class AuthInitial extends AuthState {
+  static AuthState fromUser(User? user) {
+    if (user != null) {
+      return AuthAuthenticated(user: user);
+    }
+    return AuthUnauthenticated();
+  }
+}
 
 final class AuthLoading extends AuthState {}
 

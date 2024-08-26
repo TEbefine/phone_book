@@ -9,7 +9,8 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository userRepository;
 
-  AuthBloc({required this.userRepository}) : super(AuthInitial()) {
+  AuthBloc({required this.userRepository})
+      : super(AuthInitial.fromUser(userRepository.user)) {
     on<AuthLoginRequested>(_onLoginRequested);
     on<AuthCheckRequested>(_onCheckRequested);
     on<AuthLogoutRequested>(_onSignedOut);
@@ -18,10 +19,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLoginRequested(
       AuthLoginRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    print('start');
     try {
-      final user = await userRepository.signInUser(event.email, event.password);
-      print('login pass');
+      User user = await userRepository.signInUser(event.email, event.password);
       emit(AuthAuthenticated(user: user));
     } catch (e) {
       emit(AuthUnauthenticated());

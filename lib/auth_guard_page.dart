@@ -19,7 +19,8 @@ class AuthGuardPage extends StatelessWidget {
 
     return BlocConsumer<AuthBloc, AuthState>(
       listenWhen: (previous, current) =>
-          (previous.isAuthenticated != current.isAuthenticated),
+          (previous.isAuthenticated != current.isAuthenticated) &&
+          current.isInitial == false,
       listener: (context, state) {
         if (state is AuthUnauthenticated) {
           print('listener');
@@ -27,6 +28,9 @@ class AuthGuardPage extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        if (state.isInitial) {
+          return const SizedBox.shrink();
+        }
         if (state is AuthAuthenticated) {
           return child;
         } else {
@@ -38,7 +42,8 @@ class AuthGuardPage extends StatelessWidget {
         }
       },
       buildWhen: (previous, current) =>
-          (previous.isAuthenticated != current.isAuthenticated),
+          (previous.isAuthenticated != current.isAuthenticated) &&
+          current.isInitial == false,
     );
   }
 }

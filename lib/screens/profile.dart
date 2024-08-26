@@ -1,15 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phone_book/cubit/update_%20profile_cubit/update_photo_cubit.dart';
 import 'package:phone_book/cubit/update_cubit/update_name_cubit.dart';
-import 'package:phone_book/function/authentication.dart';
 import 'package:phone_book/screens/widgets/profile_widgets/profile_layout.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({super.key, this.user});
-  User? user = UserRepository.instance.user;
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
