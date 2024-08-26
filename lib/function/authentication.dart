@@ -31,11 +31,12 @@ class UserRepository {
     _user = userCredential.user;
   }
 
-  Future<void> signInUser(String email, String password) async {
+  Future<User> signInUser(String email, String password) async {
     try {
       final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      _user = userCredential.user;
+      _user = _frbInstance.currentUser;
+      return _user!;
     } catch (e) {
       rethrow;
     }

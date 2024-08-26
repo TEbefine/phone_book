@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:phone_book/auth_guard_page.dart';
+import 'package:phone_book/bloc/auth_bloc/auth_bloc.dart';
 import 'package:phone_book/function/authentication.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -56,7 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                            onPressed: _isLoading ? null : signIn,
+                            onPressed: () {
+                              context.read<AuthBloc>().add(AuthLoginRequested(
+                                  email: _emailController.text,
+                                  password: _passwordController.text));
+                            },
                             child: const Text('Login')),
                         const SizedBox(width: 20.0),
                         ElevatedButton(
@@ -85,9 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
       await UserRepository.instance
           .signInUser(_emailController.text, _passwordController.text);
 
-      if (!mounted) return;
+      // if (!mounted) return;
 
-      context.go('/profile');
+      // context.go('/profile');
     } catch (e) {
       setState(() {
         _errorMessage = _parseError(e.toString());

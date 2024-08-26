@@ -1,12 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phone_book/bloc/auth_bloc/auth_bloc.dart';
 import 'package:phone_book/cubit/login_out_cubit/login_out_cubit.dart';
 import 'package:phone_book/cubit/register_cubit/register_user_cubit.dart';
 import 'package:phone_book/cubit/update_%20profile_cubit/update_photo_cubit.dart';
 import 'package:phone_book/function/authentication.dart';
 
 class ProfileLayout extends StatefulWidget {
-  const ProfileLayout({super.key});
+  ProfileLayout({super.key, this.user});
+  User? user = UserRepository.instance.user;
 
   @override
   State<ProfileLayout> createState() => _ProfileLayoutState();
@@ -131,7 +134,8 @@ class _ProfileLayoutState extends State<ProfileLayout> {
               ),
               const SizedBox(width: 20.0),
               ElevatedButton(
-                onPressed: () => context.read<LoginOutCubit>().signOut(),
+                onPressed: () =>
+                    context.read<AuthBloc>().add(AuthLogoutRequested()),
                 child: const Text('Logout'),
               ),
             ],

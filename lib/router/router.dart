@@ -47,16 +47,15 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
       }),
   GoRoute(
     path: '/profile',
-    // builder: (BuildContext context, GoRouterState state)
-    // {
+    // builder: (BuildContext context, GoRouterState state) {
     //   final isLoggedIn = FirebaseAuth.instance.currentUser != null;
     //   if (!isLoggedIn) {
     //     return const LoginScreen();
     //   }
-    //   return const ProfileScreen();
+    //   return ProfileScreen();
     // },
     builder: (BuildContext context, GoRouterState state) =>
-        const AuthGuardPage(child: ProfileScreen()),
+        AuthGuardPage(child: ProfileScreen()),
     routes: [
       GoRoute(
         path: 'edit-profile',
