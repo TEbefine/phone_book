@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             );
           } else {
-            Future.microtask(() => context.go('/profile'));
+            // Future.microtask(() => context.go('/profile'));
             return const Scaffold();
           }
         });

@@ -19,10 +19,17 @@ final GoRouter router = GoRouter(
           const HomeScreen(),
     ),
     GoRoute(
-        path: '/login',
-        builder: (BuildContext context, GoRouterState state) {
-          return const LoginScreen();
-        }),
+      path: '/login',
+      redirect: (BuildContext context, GoRouterState state) {
+        final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+        if (isLoggedIn) {
+          return '/';
+        }
+        return null;
+      },
+      builder: (BuildContext context, GoRouterState state) =>
+          const OPAuthGuardPage(child: LoginScreen()),
+    ),
     GoRoute(
         path: '/new-login',
         builder: (BuildContext context, GoRouterState state) {
