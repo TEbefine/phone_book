@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phone_book/bloc/auth_bloc/auth_bloc.dart';
 import 'package:phone_book/cubit/login_out_cubit/login_out_cubit.dart';
 import 'package:phone_book/cubit/new_login_cubit.dart/new_login_cubit.dart';
 import 'package:phone_book/cubit/personal_info_btu_cubit/button_cubit.dart';
@@ -18,6 +19,7 @@ void main() async {
 
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider(create: (context) => AuthBloc()),
       BlocProvider(create: (context) => UpdateNameCubit(router)),
       BlocProvider(create: (context) => RegisterUserCubit()),
       BlocProvider(create: (context) => LoginOutCubit()),

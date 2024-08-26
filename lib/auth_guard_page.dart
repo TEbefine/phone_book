@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phone_book/router/router.dart';
+import 'package:phone_book/bloc/auth_bloc/auth_bloc.dart';
 
 class AuthGuardPage extends StatelessWidget {
   const AuthGuardPage(
@@ -21,14 +22,14 @@ class AuthGuardPage extends StatelessWidget {
 
     return BlocConsumer<AuthBloc, AuthState>(
       listenWhen: (previous, current) =>
-          (previous.isNotAuthenticated != current.isNotAuthenticated),
+          (previous.runtimeType != current.runtimeType),
       listener: (context, state) {
-        if (state.isNotAuthenticated) {
+        if (state is AuthUnauthenticated) {
           redirect();
         }
       },
       builder: (context, state) {
-        if (state.isAuthenticated) {
+        if (state is AuthAuthenticated) {
           return child;
         } else {
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -38,7 +39,7 @@ class AuthGuardPage extends StatelessWidget {
         }
       },
       buildWhen: (previous, current) =>
-          (previous.isAuthenticated != current.isAuthenticated),
+          (previous.runtimeType != current.runtimeType),
     );
   }
 }
