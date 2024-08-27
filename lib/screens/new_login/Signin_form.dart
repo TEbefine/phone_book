@@ -8,6 +8,21 @@ class SigninForm extends StatefulWidget {
 }
 
 class _SigninFormState extends State<SigninForm> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isObscure = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(() {
+      setState(() {});
+    });
+    _passwordController.addListener(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,6 +41,7 @@ class _SigninFormState extends State<SigninForm> {
               height: 5.0,
             ),
             TextField(
+              controller: _emailController,
               onChanged: (value) {},
               onSubmitted: (value) {},
               keyboardType: TextInputType.emailAddress,
@@ -43,6 +59,14 @@ class _SigninFormState extends State<SigninForm> {
                     color: Colors.indigo.withOpacity(0.6), width: 2.0),
                 errorBorder: _buildOutlineInputBorder(
                     color: Colors.red.withOpacity(0.7), width: 2.0),
+                suffixIcon: _emailController.text.isNotEmpty
+                    ? IconButton(
+                        onPressed: () {
+                          _emailController.clear();
+                          setState(() {});
+                        },
+                        icon: const Icon(Icons.close))
+                    : null,
               ),
             ),
             const SizedBox(
@@ -59,26 +83,50 @@ class _SigninFormState extends State<SigninForm> {
               height: 5.0,
             ),
             TextField(
+              controller: _passwordController,
               onChanged: (value) {},
               onSubmitted: (value) {},
-              obscureText: true,
+              obscureText: _isObscure,
               enableSuggestions: false,
               autocorrect: false,
               decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                hintText: 'Password',
-                hintStyle: TextStyle(
-                  color: Colors.grey.withOpacity(0.5),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 12.0),
-                enabledBorder: _buildOutlineInputBorder(
-                    color: Colors.grey.withOpacity(0.5)),
-                focusedBorder: _buildOutlineInputBorder(
-                    color: Colors.indigo.withOpacity(0.6), width: 2.0),
-                errorBorder: _buildOutlineInputBorder(
-                    color: Colors.red.withOpacity(0.7), width: 2.0),
-              ),
+                  border: const OutlineInputBorder(),
+                  hintText: 'Password',
+                  hintStyle: TextStyle(
+                    color: Colors.grey.withOpacity(0.5),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 12.0),
+                  enabledBorder: _buildOutlineInputBorder(
+                      color: Colors.grey.withOpacity(0.5)),
+                  focusedBorder: _buildOutlineInputBorder(
+                      color: Colors.indigo.withOpacity(0.6), width: 2.0),
+                  errorBorder: _buildOutlineInputBorder(
+                      color: Colors.red.withOpacity(0.7), width: 2.0),
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_passwordController.text.isNotEmpty)
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          },
+                          icon: Icon(_isObscure
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        ),
+                      if (_passwordController.text.isNotEmpty)
+                        IconButton(
+                          onPressed: () {
+                            _passwordController.clear();
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.close),
+                        ),
+                    ],
+                  )),
             ),
           ],
         ),
