@@ -207,6 +207,9 @@ class MainSignForm extends StatelessWidget {
                       )
                     else
                       const SizedBox.shrink(),
+                    const SizedBox(
+                      height: 50.0,
+                    ),
                   ],
                 ),
               ),
