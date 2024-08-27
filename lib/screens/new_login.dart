@@ -11,7 +11,9 @@ class NewLogin extends StatefulWidget {
 class _NewLoginState extends State<NewLogin> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(backgroundColor: Colors.white, body: MainSignForm());
+    return const Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(child: MainSignForm()));
   }
 }
 

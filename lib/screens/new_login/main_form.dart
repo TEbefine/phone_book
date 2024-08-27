@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_book/cubit/new_login_cubit.dart/new_login_cubit.dart';
+import 'package:phone_book/screens/new_login/main_form/login_platform.dart';
 import 'package:phone_book/screens/new_login/my_dropdown.dart';
 
 class MainSignForm extends StatelessWidget {
@@ -18,6 +19,7 @@ class MainSignForm extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
+                  // mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,8 +31,8 @@ class MainSignForm extends StatelessWidget {
                             fillColor: Colors.white,
                             shape: const CircleBorder(),
                             constraints: const BoxConstraints.tightFor(
-                              width: 40.0,
-                              height: 40.0,
+                              width: 30.0,
+                              height: 30.0,
                             ),
                             elevation: 0.0,
                             child: const Icon(
@@ -39,11 +41,14 @@ class MainSignForm extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const MyDropdown(),
+                        const SizedBox(
+                          height: 50.0, // Adjust height as needed
+                          child: MyDropdown(),
+                        ),
                       ],
                     ),
                     const SizedBox(
-                      height: 30.0,
+                      height: 10.0,
                     ),
                     const CircleAvatar(
                       radius: 40.0,
@@ -51,16 +56,57 @@ class MainSignForm extends StatelessWidget {
                       backgroundImage: NetworkImage(
                           'https://avatars.githubusercontent.com/u/78997786?s=280&v=4'),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 15.0),
                     Text(state is SignIn ? 'Sign In' : 'Sign Up',
                         style:
                             Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                  fontSize: 50.0,
+                                  fontSize: 45.0,
                                   color: Colors.indigo[500],
                                 )),
                     const SizedBox(
+                      height: 20.0,
+                    ),
+                    const LoginPlatform(),
+                    const SizedBox(
                       height: 30.0,
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 8.0),
+                        Container(
+                          height: 2.0,
+                          width: 250.0,
+                          color: Colors.grey.withOpacity(0.2),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Text(
+                          'OR',
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontSize: 16.0,
+                                    color: Colors.grey[600],
+                                  ),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Container(
+                          height: 2.0,
+                          width: 250.0,
+                          color: Colors.grey.withOpacity(0.2),
+                        ),
+                        const SizedBox(width: 8.0),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15.0,
+                    ),
+                    Text('E-mail address',
+                        style:
+                            Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                  fontSize: 18.0,
+                                  color: Colors.indigo[500],
+                                )),
+                    const SizedBox(height: 40.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
