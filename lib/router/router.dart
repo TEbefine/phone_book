@@ -4,11 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:phone_book/auth_guard_page.dart';
 import 'package:phone_book/main.dart';
 import 'package:phone_book/screens/account.dart';
-import 'package:phone_book/screens/edit_profile.dart';
 import 'package:phone_book/screens/error.dart';
 import 'package:phone_book/screens/login.dart';
 import 'package:phone_book/screens/new_login.dart';
-import 'package:phone_book/screens/profile.dart';
 import 'package:phone_book/screens/register.dart';
 
 final GoRouter router = GoRouter(
@@ -29,6 +27,7 @@ final GoRouter router = GoRouter(
       },
       builder: (BuildContext context, GoRouterState state) =>
           const OPAuthGuardPage(child: LoginScreen()),
+      // const LoginScreen(),
     ),
     GoRoute(
         path: '/new-login',
@@ -47,30 +46,6 @@ final GoRouter router = GoRouter(
         builder: (BuildContext context, GoRouterState state) {
           return const RegisterScreen();
         }),
-    GoRoute(
-      path: '/profile',
-      redirect: (BuildContext context, GoRouterState state) {
-        final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-        if (!isLoggedIn) {
-          return '/login';
-        }
-        return null;
-      },
-      builder: (BuildContext context, GoRouterState state) =>
-          const AuthGuardPage(child: ProfileScreen()),
-      routes: [
-        GoRoute(
-          path: 'edit-profile',
-          builder: (BuildContext context, GoRouterState state) {
-            final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-            if (!isLoggedIn) {
-              return const LoginScreen();
-            }
-            return const EditProfile();
-          },
-        ),
-      ],
-    ),
     GoRoute(
       path: '/account',
       redirect: (BuildContext context, GoRouterState state) {

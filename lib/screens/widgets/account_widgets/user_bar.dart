@@ -10,7 +10,7 @@ class UserBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30.0),
+      padding: const EdgeInsets.only(left: 50.0),
       child: Row(
         children: [
           CircleAvatar(
@@ -47,7 +47,99 @@ class UserBar extends StatelessWidget {
             message: 'Logout',
             child: RawMaterialButton(
               onPressed: () {
-                context.read<AuthBloc>().add(AuthLogoutRequested());
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      backgroundColor: Colors.white,
+                      title: Center(
+                        child: Text(
+                          'Sign Out',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.copyWith(
+                                fontSize: 18.0,
+                              ),
+                        ),
+                      ),
+                      content: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                        child: Text(
+                          'Are you sure you want to log out?',
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontSize: 14.0,
+                                    color: Colors.grey[600],
+                                  ),
+                        ),
+                      ),
+                      actions: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                side: const BorderSide(
+                                  color: Colors.grey,
+                                  width: 1.0,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 45.0, vertical: 8.0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              ),
+                              child: Text(
+                                'No',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      fontSize: 14.0,
+                                      color: Colors.grey[600],
+                                    ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 25.0,
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                context
+                                    .read<AuthBloc>()
+                                    .add(AuthLogoutRequested());
+                              },
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.blue,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 45.0, vertical: 8.0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              ),
+                              child: Text(
+                                'Yes',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      fontSize: 14.0,
+                                      color: Colors.white,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
               fillColor: Colors.white,
               shape: const CircleBorder(),

@@ -26,7 +26,7 @@ class _SignFormState extends State<SignInForm> {
               const CircleAvatar(
                 radius: 40.0,
                 backgroundImage: NetworkImage(
-                    'https://png.pngtree.com/thumb_back/fh260/background/20220904/pngtree-side-profile-of-japanese-monkey-cute-snow-pool-photo-image_22752788.jpg'),
+                    'https://avatars.githubusercontent.com/u/78997786?s=280&v=4'),
               ),
               const SizedBox(height: 30),
               Text('Sign In',

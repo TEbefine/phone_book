@@ -23,7 +23,6 @@ class AuthGuardPage extends StatelessWidget {
           current.isInitial == false,
       listener: (context, state) {
         if (state is AuthUnauthenticated) {
-          print('listener');
           redirect();
         }
       },
@@ -35,7 +34,6 @@ class AuthGuardPage extends StatelessWidget {
           return child;
         } else {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            print('builder');
             redirect();
           });
           return const SizedBox();
@@ -68,19 +66,17 @@ class OPAuthGuardPage extends StatelessWidget {
           current.isInitial == false,
       listener: (context, state) {
         if (state is AuthAuthenticated) {
-          print('listener');
           redirect();
         }
       },
       builder: (context, state) {
         if (state.isInitial) {
-          return const SizedBox.shrink();
+          return child;
         }
         if (state is AuthUnauthenticated) {
           return child;
         } else {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            print('builder');
             redirect();
           });
           return const SizedBox();
