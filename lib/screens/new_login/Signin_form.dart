@@ -18,6 +18,7 @@ class _SignFormState extends State<SignInForm> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -25,6 +26,7 @@ class _SignFormState extends State<SignInForm> {
             children: [
               const CircleAvatar(
                 radius: 40.0,
+                backgroundColor: Colors.white,
                 backgroundImage: NetworkImage(
                     'https://avatars.githubusercontent.com/u/78997786?s=280&v=4'),
               ),
@@ -32,7 +34,7 @@ class _SignFormState extends State<SignInForm> {
               Text('Sign In',
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                         fontSize: 50.0,
-                        color: Colors.brown[800],
+                        color: Colors.indigo[500],
                       )),
               const SizedBox(height: 10),
               Row(
@@ -58,7 +60,7 @@ class _SignFormState extends State<SignInForm> {
               Text('E-mail address',
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                         fontSize: 20.0,
-                        color: Colors.brown[800],
+                        color: Colors.indigo[500],
                       )),
               const SizedBox(height: 40.0),
               Column(

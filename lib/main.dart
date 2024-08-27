@@ -12,6 +12,7 @@ import 'package:phone_book/cubit/update_cubit/update_name_cubit.dart';
 import 'package:phone_book/cubit/username_controller.dart';
 import 'package:phone_book/function/authentication.dart';
 import 'package:phone_book/router/router.dart';
+import 'package:phone_book/screens/new_login.dart';
 // import 'package:provider/provider.dart';
 
 void main() async {
