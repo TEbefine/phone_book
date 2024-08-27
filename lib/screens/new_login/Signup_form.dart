@@ -25,7 +25,7 @@ class _SignUpFormState extends State<SignUpForm> {
           child: const Text('Login'),
         ),
         TextButton(
-          onPressed: () => context.read<NewLoginCubit>().showLogIn(),
+          onPressed: () => context.read<NewLoginCubit>().showSignIn(),
           child: const Text('Don\'t have an account? Sign In'),
         ),
       ],

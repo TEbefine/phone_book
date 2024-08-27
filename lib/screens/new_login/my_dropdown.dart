@@ -34,7 +34,7 @@ class _MyDropdownState extends State<MyDropdown> {
             height: null,
           ),
           dropdownColor: Colors.white,
-          items: <String>['English', 'Francais', 'Deutsh', 'Espanol']
+          items: <String>['English', 'Français', 'Deutsch', 'Español']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem(
               value: value,

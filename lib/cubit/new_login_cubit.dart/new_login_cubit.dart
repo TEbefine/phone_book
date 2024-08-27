@@ -7,5 +7,5 @@ class NewLoginCubit extends Cubit<NewLoginState> {
   NewLoginCubit() : super(SignIn());
 
   void showSignUp() => emit(SignUp());
-  void showLogIn() => emit(SignIn());
+  void showSignIn() => emit(SignIn());
 }
