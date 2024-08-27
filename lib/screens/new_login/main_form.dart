@@ -78,7 +78,7 @@ class MainSignForm extends StatelessWidget {
                         const SizedBox(width: 8.0),
                         Container(
                           height: 2.0,
-                          width: 250.0,
+                          width: 200.0,
                           color: Colors.grey.withOpacity(0.2),
                         ),
                         const SizedBox(width: 8.0),
@@ -93,7 +93,7 @@ class MainSignForm extends StatelessWidget {
                         const SizedBox(width: 8.0),
                         Container(
                           height: 2.0,
-                          width: 250.0,
+                          width: 200.0,
                           color: Colors.grey.withOpacity(0.2),
                         ),
                         const SizedBox(width: 8.0),

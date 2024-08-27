@@ -49,6 +49,7 @@ dependencies:
   image_cropper_for_web: ^6.0.2
   bloc: ^8.1.4
   provider: ^6.1.2
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:

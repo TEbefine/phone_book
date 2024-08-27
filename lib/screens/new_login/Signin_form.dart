@@ -10,6 +10,7 @@ class SigninForm extends StatefulWidget {
 class _SigninFormState extends State<SigninForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
   bool _isObscure = true;
 
   @override
@@ -20,6 +21,9 @@ class _SigninFormState extends State<SigninForm> {
     });
     _passwordController.addListener(() {
       setState(() {});
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).requestFocus(_focusNode);
     });
   }
 
@@ -42,6 +46,7 @@ class _SigninFormState extends State<SigninForm> {
             ),
             TextField(
               controller: _emailController,
+              focusNode: _focusNode,
               onChanged: (value) {},
               onSubmitted: (value) {},
               keyboardType: TextInputType.emailAddress,
