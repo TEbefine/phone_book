@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_book/cubit/new_login_cubit.dart/new_login_cubit.dart';
-import 'package:phone_book/screens/new_login/Signin_form.dart';
-import 'package:phone_book/screens/new_login/Signup_form.dart';
+import 'package:phone_book/screens/new_login/signin_form.dart';
+import 'package:phone_book/screens/new_login/signup_form.dart';
 import 'package:phone_book/screens/new_login/main_form/login_platform.dart';
 import 'package:phone_book/screens/new_login/my_dropdown.dart';
 
@@ -128,44 +128,43 @@ class MainSignForm extends StatelessWidget {
                                   ),
                         ),
                         TextButton(
-                            onPressed: () {
-                              if (state is SignIn) {
-                                context.read<NewLoginCubit>().showSignUp();
-                              } else {
-                                context.read<NewLoginCubit>().showSignIn();
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              elevation: 0,
-                              side: BorderSide.none,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                            ).copyWith(
-                              // Define the hover effect using WidgetStateProperty
-                              overlayColor:
-                                  WidgetStateProperty.resolveWith<Color?>(
-                                (Set<WidgetState> states) {
-                                  if (states.contains(WidgetState.hovered)) {
-                                    return Colors.blue.withOpacity(
-                                        0.05); // Small blue highlight on hover
-                                  }
-                                  return null; // No change when not hovered
-                                },
-                              ),
-                              side: WidgetStateProperty.all(BorderSide.none),
+                          onPressed: () {
+                            if (state is SignIn) {
+                              context.read<NewLoginCubit>().showSignUp();
+                            } else {
+                              context.read<NewLoginCubit>().showSignIn();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            elevation: 0,
+                            side: BorderSide.none,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: Text(
-                              state is SignIn ? 'Sign Up' : 'Sign In',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineLarge
-                                  ?.copyWith(
-                                    fontSize: 16.0,
-                                    color: Colors.indigo[500],
-                                  ),
-                            )),
+                          ).copyWith(
+                            overlayColor:
+                                WidgetStateProperty.resolveWith<Color?>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.hovered)) {
+                                  return Colors.blue.withOpacity(0.05);
+                                }
+                                return null;
+                              },
+                            ),
+                            side: WidgetStateProperty.all(BorderSide.none),
+                          ),
+                          child: Text(
+                            state is SignIn ? 'Sign Up' : 'Sign In',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(
+                                  fontSize: 16.0,
+                                  color: Colors.indigo[500],
+                                ),
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -182,14 +181,12 @@ class MainSignForm extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ).copyWith(
-                          // Define the hover effect using WidgetStateProperty
                           overlayColor: WidgetStateProperty.resolveWith<Color?>(
                             (Set<WidgetState> states) {
                               if (states.contains(WidgetState.hovered)) {
-                                return Colors.blue.withOpacity(
-                                    0.05); // Small blue highlight on hover
+                                return Colors.blue.withOpacity(0.05);
                               }
-                              return null; // No change when not hovered
+                              return null;
                             },
                           ),
                           side: WidgetStateProperty.all(BorderSide.none),

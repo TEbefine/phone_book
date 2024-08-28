@@ -317,14 +317,13 @@ class _SignupFormState extends State<SignupForm> {
           height: 20.0,
         ),
         SizedBox(
-          width: double.infinity, // Makes the button full width
+          width: double.infinity,
           child: ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
-              backgroundColor:
-                  Colors.indigo[600], // Set the background color here
-              foregroundColor: Colors.white, // Set the text color here
-              elevation: 0, // Adjust shadow
+              backgroundColor: Colors.indigo[600],
+              foregroundColor: Colors.white,
+              elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
@@ -346,7 +345,7 @@ class _SignupFormState extends State<SignupForm> {
   OutlineInputBorder _buildOutlineInputBorder(
       {Color? color, double width = 1.0}) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8.0), // Increase for more chamfer
+      borderRadius: BorderRadius.circular(8.0),
       borderSide: BorderSide(
         color: color ?? Colors.transparent,
         width: width,

@@ -41,14 +41,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       theme: ThemeData(
-          fontFamily: 'Roboto',
-          textTheme: const TextTheme(
-            headlineLarge: TextStyle(
-                fontFamily: 'Roboto',
-                fontSize: 36.0,
-                fontWeight: FontWeight.bold),
-            bodyLarge: TextStyle(fontFamily: 'Roboto', fontSize: 14.0),
-          )),
+        fontFamily: 'Roboto',
+        textTheme: const TextTheme(
+          headlineLarge: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 36.0,
+              fontWeight: FontWeight.bold),
+          bodyLarge: TextStyle(fontFamily: 'Roboto', fontSize: 14.0),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       routerConfig: router,
     );
@@ -69,7 +70,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               Image.network(
                 'https://da28rauy2a860.cloudfront.net/completehome/wp-content/uploads/2021/03/03114534/Millbrook-Homes-58series-1.jpg',
-                width: 200.0, // Set desired width
+                width: 200.0,
                 height: 200.0,
               ),
               const SizedBox(
@@ -77,7 +78,7 @@ class HomeScreen extends StatelessWidget {
               ),
               Image.network(
                 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Blank_page_intentionally_end_of_book.jpg/800px-Blank_page_intentionally_end_of_book.jpg',
-                width: 200.0, // Set desired width
+                width: 200.0,
                 height: 200.0,
               ),
             ],
