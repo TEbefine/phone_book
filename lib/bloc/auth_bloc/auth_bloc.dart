@@ -19,8 +19,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLoginRequested(
       AuthLoginRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
+
+    if (event.email == '') {
+      emit(const AuthError(error: 'Email required'));
+      return;
+    }
+
     try {
-      User user = await userRepository.signInUser(event.email, event.password);
+      User user =
+          await userRepository.signInUser(event.email!, event.password!);
       emit(AuthAuthenticated(user: user));
     } catch (e) {
       emit(AuthUnauthenticated());
