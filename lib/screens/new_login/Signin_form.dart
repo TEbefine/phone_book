@@ -35,6 +35,9 @@ class _SigninFormState extends State<SigninForm> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
+        final emailError = state is AuthError ? state.emailError : null;
+        final passwordError = state is AuthError ? state.passwordError : null;
+
         return Column(
           children: [
             Column(
@@ -66,23 +69,48 @@ class _SigninFormState extends State<SigninForm> {
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16.0, vertical: 12.0),
                     enabledBorder: _buildOutlineInputBorder(
-                        color: Colors.grey.withOpacity(0.5)),
+                        color: emailError == null
+                            ? Colors.grey.withOpacity(0.5)
+                            : Colors.redAccent,
+                        width: 2.0),
                     focusedBorder: _buildOutlineInputBorder(
-                        color: Colors.indigo.withOpacity(0.6), width: 2.0),
-                    errorBorder: _buildOutlineInputBorder(
-                        color: Colors.red.withOpacity(0.7), width: 2.0),
+                        color: emailError == null
+                            ? Colors.indigo.withOpacity(0.6)
+                            : Colors.redAccent,
+                        width: 2.0),
                     suffixIcon: _emailController.text.isNotEmpty
                         ? IconButton(
                             onPressed: () {
                               _emailController.clear();
                               setState(() {});
                             },
-                            icon: const Icon(Icons.close))
+                            icon: Icon(
+                              Icons.close,
+                              color: emailError != null
+                                  ? Colors.red
+                                  : Colors.black,
+                            ))
                         : null,
                   ),
                 ),
-                if (state is AuthError)
-                  Text(state.error)
+                const SizedBox(
+                  height: 5.0,
+                ),
+                if (emailError != null)
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 20.0,
+                      ),
+                      Text(
+                        emailError,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 12.0,
+                              color: Colors.redAccent,
+                            ),
+                      ),
+                    ],
+                  )
                 else
                   const SizedBox.shrink(),
                 const SizedBox(
@@ -114,11 +142,15 @@ class _SigninFormState extends State<SigninForm> {
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 12.0),
                       enabledBorder: _buildOutlineInputBorder(
-                          color: Colors.grey.withOpacity(0.5)),
+                          color: passwordError == null
+                              ? Colors.grey.withOpacity(0.5)
+                              : Colors.redAccent,
+                          width: 2.0),
                       focusedBorder: _buildOutlineInputBorder(
-                          color: Colors.indigo.withOpacity(0.6), width: 2.0),
-                      errorBorder: _buildOutlineInputBorder(
-                          color: Colors.red.withOpacity(0.7), width: 2.0),
+                          color: passwordError == null
+                              ? Colors.indigo.withOpacity(0.6)
+                              : Colors.redAccent,
+                          width: 2.0),
                       suffixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -129,9 +161,14 @@ class _SigninFormState extends State<SigninForm> {
                                   _isObscure = !_isObscure;
                                 });
                               },
-                              icon: Icon(_isObscure
-                                  ? Icons.visibility_off
-                                  : Icons.visibility),
+                              icon: Icon(
+                                _isObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: passwordError != null
+                                    ? Colors.red
+                                    : Colors.black,
+                              ),
                             ),
                           if (_passwordController.text.isNotEmpty)
                             IconButton(
@@ -139,11 +176,36 @@ class _SigninFormState extends State<SigninForm> {
                                 _passwordController.clear();
                                 setState(() {});
                               },
-                              icon: const Icon(Icons.close),
+                              icon: Icon(
+                                Icons.close,
+                                color: passwordError != null
+                                    ? Colors.red
+                                    : Colors.black,
+                              ),
                             ),
                         ],
                       )),
                 ),
+                const SizedBox(
+                  height: 5.0,
+                ),
+                if (passwordError != null)
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 20.0,
+                      ),
+                      Text(
+                        passwordError,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 12.0,
+                              color: Colors.redAccent,
+                            ),
+                      ),
+                    ],
+                  )
+                else
+                  const SizedBox.shrink(),
               ],
             ),
             const SizedBox(

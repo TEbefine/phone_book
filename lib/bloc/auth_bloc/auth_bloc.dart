@@ -20,8 +20,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AuthLoginRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
 
-    if (event.email == '') {
-      emit(const AuthError(error: 'Email required'));
+    String? emailError;
+    String? passwordError;
+
+    bool isEmail(String email) {
+      final emailRegExp = RegExp(
+        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+        caseSensitive: false,
+      );
+      return emailRegExp.hasMatch(email);
+    }
+
+    if (event.email == null || event.email!.isEmpty) {
+      emailError = 'Email required';
+    } else if (!isEmail(event.email!)) {
+      emailError = 'Invalid email';
+    }
+
+    if (event.password == null || event.password!.isEmpty) {
+      passwordError = 'Password required';
+    }
+
+    if (emailError != null || passwordError != null) {
+      emit(AuthError(emailError: emailError, passwordError: passwordError));
       return;
     }
 
