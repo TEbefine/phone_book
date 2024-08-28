@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -208,12 +210,22 @@ class _SignupFormState extends State<SignupForm> {
         Row(
           children: [
             Checkbox(
-                value: _isChecked,
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    _isChecked = !_isChecked;
-                  });
-                }),
+              value: _isChecked,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  _isChecked = !_isChecked;
+                });
+              },
+              fillColor:
+                  WidgetStateProperty.all(Colors.white), // Background color
+              checkColor: Colors.indigo.withOpacity(0.9),
+              side: WidgetStateBorderSide.resolveWith(
+                (states) => BorderSide(
+                  color: Colors.indigo.withOpacity(0.9),
+                  width: 2.0,
+                ),
+              ),
+            ),
             const SizedBox(
               width: 10.0,
             ),
@@ -227,19 +239,75 @@ class _SignupFormState extends State<SignupForm> {
                         color: Colors.black.withOpacity(0.7),
                       ),
                 ),
-                Text(
-                  'Technology Limited Terms of Service and consent to',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 16.0,
-                        color: Colors.black.withOpacity(0.7),
+                RichText(
+                  text: TextSpan(
+                    text: 'Technology Limited ',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 16.0,
+                          color: Colors.black.withOpacity(0.7),
+                        ),
+                    children: [
+                      TextSpan(
+                        text: 'Terms of Service',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: Colors.indigo.withOpacity(
+                                  0.9), // Adjust text color as needed
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.indigo.withOpacity(
+                                  0.9), // Explicitly set underline color
+                            ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            final Uri url = Uri.parse(
+                                'https://runonflux.io/termsandconditions');
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
                       ),
+                      TextSpan(
+                        text: ' and consent to',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 16.0,
+                              color: Colors.black.withOpacity(0.7),
+                            ),
+                      )
+                    ],
+                  ),
                 ),
-                Text(
-                  'its Privacy Policy.',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 16.0,
-                        color: Colors.black.withOpacity(0.7),
-                      ),
+                RichText(
+                  text: TextSpan(
+                    text: 'its ',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 16.0,
+                          color: Colors.black.withOpacity(0.7),
+                        ),
+                    children: [
+                      TextSpan(
+                          text: 'Privacy Policy',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(
+                                color: Colors.indigo.withOpacity(0.9),
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.indigo.withOpacity(0.9),
+                              ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              final Uri url = Uri.parse(
+                                  'https://runonflux.io/privacyPolicy');
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            }),
+                      const TextSpan(text: '.')
+                    ],
+                  ),
                 ),
               ],
             ),
