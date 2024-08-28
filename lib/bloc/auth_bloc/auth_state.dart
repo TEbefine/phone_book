@@ -42,3 +42,12 @@ final class AuthError extends AuthState {
   @override
   List<Object> get props => [emailError ?? '', passwordError ?? ''];
 }
+
+final class LoginError extends AuthState {
+  final String error;
+
+  const LoginError({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}
