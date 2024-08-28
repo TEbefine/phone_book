@@ -18,8 +18,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onLoginRequested(
       AuthLoginRequested event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
-
     String? emailError;
     String? passwordError;
 
@@ -46,12 +44,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       return;
     }
 
+    emit(AuthLoading());
+
     try {
       User user =
           await userRepository.signInUser(event.email!, event.password!);
       emit(AuthAuthenticated(user: user));
     } catch (e) {
-      emit(AuthUnauthenticated());
+      final match = RegExp(r'\[(.*?)\]\s*(.*)').firstMatch(e.toString());
+      if (match != null && match.groupCount == 2) {
+        emit(LoginError(error: match.group(2) ?? 'Unknown error'));
+        return;
+      }
+      emit(LoginError(error: e.toString()));
     }
   }
 
@@ -68,6 +73,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onSignedOut(
       AuthLogoutRequested event, Emitter<AuthState> emit) async {
-    emit(AuthUnauthenticated());
+    emit(AuthLoading());
+    try {
+      await UserRepository.instance.signOut();
+      emit(AuthUnauthenticated());
+    } catch (e) {
+      emit(const AuthError());
+    }
   }
 }

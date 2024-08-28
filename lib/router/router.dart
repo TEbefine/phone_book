@@ -26,7 +26,7 @@ final GoRouter router = GoRouter(
         return null;
       },
       builder: (BuildContext context, GoRouterState state) =>
-          const OPAuthGuardPage(child: LoginScreen()),
+          const OPAuthGuardPage(child: NewLogin()),
       // const LoginScreen(),
     ),
     GoRoute(
