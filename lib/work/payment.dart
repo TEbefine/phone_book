@@ -17,10 +17,10 @@ class Payment extends StatelessWidget {
                 return Dialog(
                   backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: Container(
-                    width: 400.0,
+                    width: 384.0,
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -29,15 +29,19 @@ class Payment extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              'Connect a Wallet',
+                            Text(
+                              'Connect a wallet',
                               style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 17.0,
+                                  color: Colors.grey[800]),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.close),
+                              icon: const Icon(
+                                Icons.close,
+                                color: Colors.grey,
+                              ),
+                              iconSize: 20.0,
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
@@ -63,18 +67,19 @@ class Payment extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              Image.network(
-                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhLIGqSkKnIbrJdFQ7z6MZ63_gs_LuCz875A&s', // Replace with your image URL
+                              Image.asset(
+                                'images/zelcore_wallet.png',
                                 width: 40.0,
                                 height: 40.0,
                               ),
                               const SizedBox(width: 15.0),
-                              const Text(
+                              Text(
                                 'Zelcore Wallet',
                                 style: TextStyle(
-                                    fontSize: 18.0,
+                                    fontFamily: 'Inter',
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black),
+                                    color: Colors.black.withOpacity(0.7)),
                               ),
                             ],
                           ),
@@ -98,18 +103,19 @@ class Payment extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              Image.network(
-                                'https://pbs.twimg.com/profile_images/1712146862671527936/r279yPxM_400x400.jpg', // Replace with your image URL
+                              Image.asset(
+                                'images/ssp_wallet.png',
                                 width: 40.0,
                                 height: 40.0,
                               ),
                               const SizedBox(width: 15.0),
-                              const Text(
+                              Text(
                                 'SSP Wallet',
                                 style: TextStyle(
-                                    fontSize: 18.0,
+                                    fontFamily: 'Inter',
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black),
+                                    color: Colors.black.withOpacity(0.7)),
                               ),
                             ],
                           ),
@@ -133,18 +139,19 @@ class Payment extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              Image.network(
-                                'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/1024px-MetaMask_Fox.svg.png',
+                              Image.asset(
+                                'images/metamask.png',
                                 width: 40.0,
                                 height: 40.0,
                               ),
                               const SizedBox(width: 15.0),
-                              const Text(
+                              Text(
                                 'MetaMask',
                                 style: TextStyle(
-                                    fontSize: 18.0,
+                                    fontFamily: 'Inter',
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black),
+                                    color: Colors.black.withOpacity(0.7)),
                               ),
                             ],
                           ),
@@ -170,20 +177,21 @@ class Payment extends StatelessWidget {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: Image.network(
-                                  'https://pbs.twimg.com/profile_images/1737473466847125504/SN4QL9k3_400x400.jpg', // Replace with your image URL
+                                child: Image.asset(
+                                  'images/walletconnect.png',
                                   width: 40.0,
                                   height: 40.0,
                                   fit: BoxFit.cover,
                                 ),
                               ),
                               const SizedBox(width: 15.0),
-                              const Text(
+                              Text(
                                 'WalletConnect',
                                 style: TextStyle(
-                                    fontSize: 18.0,
+                                    fontFamily: 'Inter',
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black),
+                                    color: Colors.black.withOpacity(0.7)),
                               ),
                             ],
                           ),
@@ -209,20 +217,21 @@ class Payment extends StatelessWidget {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: Image.network(
-                                  'https://play-lh.googleusercontent.com/wrgUujbq5kbn4Wd4tzyhQnxOXkjiGqq39N4zBvCHmxpIiKcZw_Pb065KTWWlnoejsg', // Replace with your image URL
+                                child: Image.asset(
+                                  'images/coinbase_wallet.png',
                                   width: 40.0,
                                   height: 40.0,
                                   fit: BoxFit.cover,
                                 ),
                               ),
                               const SizedBox(width: 15.0),
-                              const Text(
+                              Text(
                                 'Coinbase Wallet',
                                 style: TextStyle(
-                                    fontSize: 18.0,
+                                    fontFamily: 'Inter',
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black),
+                                    color: Colors.black.withOpacity(0.7)),
                               ),
                             ],
                           ),
@@ -238,13 +247,16 @@ class Payment extends StatelessWidget {
                                 text:
                                     'By connecting a wallet,you agree to InFlux Technology Limited ',
                                 style: TextStyle(
-                                  fontSize: 14.0,
+                                  fontSize: 13,
+                                  fontFamily: 'Inter',
                                   color: Colors.black.withOpacity(0.5),
                                 ),
                                 children: [
                                   TextSpan(
                                     text: 'Terms of Service',
                                     style: TextStyle(
+                                      fontSize: 12.0,
+                                      fontFamily: 'Inter',
                                       color: Colors.black.withOpacity(
                                           0.5), // Adjust text color as needed
                                       decoration: TextDecoration.underline,
@@ -266,13 +278,16 @@ class Payment extends StatelessWidget {
                                   TextSpan(
                                     text: ' and consent to its ',
                                     style: TextStyle(
-                                      fontSize: 14.0,
+                                      fontSize: 13.0,
+                                      fontFamily: 'Inter',
                                       color: Colors.black.withOpacity(0.5),
                                     ),
                                   ),
                                   TextSpan(
                                       text: 'Privacy Policy',
                                       style: TextStyle(
+                                        fontSize: 13.0,
+                                        fontFamily: 'Inter',
                                         color: Colors.black.withOpacity(
                                             0.5), // Adjust text color as needed
                                         decoration: TextDecoration.underline,

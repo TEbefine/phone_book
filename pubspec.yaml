@@ -77,8 +77,25 @@ flutter:
         - asset: assets/fonts/Roboto-Bold.ttf
           weight: 500
 
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 500
+
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-Bold.ttf
+          weight: 600
+
   assets:
     - assets/images/honeycomb.png
+    - images/zelcore_wallet.png
+    - images/metamask_wallet.png
+    - images/walletconnect.png
+    - images/coinbase_wallet.png
+    - images/ssp_wallet.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
