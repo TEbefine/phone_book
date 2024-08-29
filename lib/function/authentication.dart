@@ -22,13 +22,14 @@ class UserRepository {
     _user = _frbInstance.currentUser;
   }
 
-  Future<void> registerUser(String email, String password) async {
+  Future<User?> registerUser(String email, String password) async {
     final userCredential =
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
     _user = userCredential.user;
+    return _user;
   }
 
   Future<User> signInUser(String email, String password) async {

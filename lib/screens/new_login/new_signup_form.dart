@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phone_book/bloc/auth_bloc/auth_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewSignupForm extends StatefulWidget {
@@ -110,6 +112,9 @@ class _NewSignupFormState extends State<NewSignupForm> {
                 return 'Email required';
               } else if (!RegExp(pattern, caseSensitive: false)
                   .hasMatch(value)) {
+                setState(() {
+                  _isEmailError = true;
+                });
                 return 'Invalid email';
               }
               setState(() {
@@ -425,7 +430,9 @@ class _NewSignupFormState extends State<NewSignupForm> {
             child: ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  print('Ok');
+                  context.read<AuthBloc>().add(AuthSignUpRequested(
+                      email: _emailController.text,
+                      password: _passwordController.text));
                 }
               },
               style: ElevatedButton.styleFrom(

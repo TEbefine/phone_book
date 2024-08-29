@@ -10,13 +10,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository userRepository;
 
   AuthBloc({required this.userRepository}) : super(AuthInitial()) {
-    on<AuthSignInRequested>(_onLoginRequested);
+    on<AuthSignInRequested>(_onSignInRequested);
+    on<AuthSignUpRequested>(_onSignUpRequested);
     on<AuthCheckRequested>(_onCheckRequested);
     on<AuthLogoutRequested>(_onSignedOut);
     add(AuthCheckRequested());
   }
 
-  Future<void> _onLoginRequested(
+  Future<void> _onSignInRequested(
       AuthSignInRequested event, Emitter<AuthState> emit) async {
     String? emailError;
     String? passwordError;
@@ -50,6 +51,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       User user =
           await userRepository.signInUser(event.email!, event.password!);
       emit(AuthAuthenticated(user: user));
+    } catch (e) {
+      final match = RegExp(r'\[(.*?)\]\s*(.*)').firstMatch(e.toString());
+      if (match != null && match.groupCount == 2) {
+        emit(LoginError(error: match.group(2) ?? 'Unknown error'));
+        return;
+      }
+      emit(LoginError(error: e.toString()));
+    }
+  }
+
+  Future<void> _onSignUpRequested(
+      AuthSignUpRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+
+    try {
+      final user = await UserRepository.instance
+          .registerUser(event.email, event.password);
+      if (user != null) {
+        emit(AuthAuthenticated(user: user));
+      } else {
+        emit(const LoginError(error: 'Can\'t found user'));
+      }
     } catch (e) {
       final match = RegExp(r'\[(.*?)\]\s*(.*)').firstMatch(e.toString());
       if (match != null && match.groupCount == 2) {

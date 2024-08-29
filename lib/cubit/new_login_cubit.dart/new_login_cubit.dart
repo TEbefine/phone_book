@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 part 'new_login_state.dart';
 
 class NewLoginCubit extends Cubit<NewLoginState> {
-  NewLoginCubit() : super(SignUp());
+  NewLoginCubit() : super(SignIn());
 
   void showSignUp() => emit(SignUp());
   void showSignIn() => emit(SignIn());
