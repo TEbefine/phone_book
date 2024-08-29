@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phone_book/cubit/new_login_cubit.dart/new_login_cubit.dart';
+import 'package:phone_book/screens/new_login/new_signup_form.dart';
 import 'package:phone_book/screens/new_login/signin_form.dart';
 import 'package:phone_book/screens/new_login/signup_form.dart';
 import 'package:phone_book/screens/new_login/main_form/login_platform.dart';
@@ -112,7 +113,7 @@ class MainSignForm extends StatelessWidget {
                     if (state is SignIn)
                       const SigninForm()
                     else
-                      const SignupForm(),
+                      const NewSignupForm(),
                     const SizedBox(height: 25.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
