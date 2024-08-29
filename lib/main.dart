@@ -89,6 +89,9 @@ class HomeScreen extends StatelessWidget {
           ElevatedButton(
               onPressed: () => context.go('/account'),
               child: const Text('account')),
+          ElevatedButton(
+              onPressed: () => context.go('/payment'),
+              child: const Text('payment')),
         ],
       ),
     ));

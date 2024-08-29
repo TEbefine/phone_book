@@ -5,6 +5,7 @@ import 'package:phone_book/auth_guard_page.dart';
 import 'package:phone_book/main.dart';
 import 'package:phone_book/screens/account.dart';
 import 'package:phone_book/screens/new_login.dart';
+import 'package:phone_book/work/payment.dart';
 
 final GoRouter router = GoRouter(
   routes: <RouteBase>[
@@ -38,6 +39,10 @@ final GoRouter router = GoRouter(
               const AuthGuardPage(child: AccountScreen()),
         ),
       ],
+    ),
+    GoRoute(
+      path: '/payment',
+      builder: (BuildContext context, GoRouterState state) => const Payment(),
     ),
   ],
 );
