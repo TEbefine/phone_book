@@ -76,6 +76,10 @@ class _NewSignupFormState extends State<NewSignupForm> {
                       fontSize: 16.0,
                       color: Colors.grey[600],
                     ),
+                errorStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 14.0,
+                      color: Colors.redAccent,
+                    ),
                 enabledBorder: _buildOutlineInputBorder(
                     color: Colors.grey.withOpacity(0.5)),
                 focusedBorder: _buildOutlineInputBorder(
@@ -96,13 +100,16 @@ class _NewSignupFormState extends State<NewSignupForm> {
                         ))
                     : null),
             validator: (String? value) {
+              String pattern =
+                  r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+
               if (value == null || value.isEmpty) {
                 setState(() {
                   _isEmailError = true;
                 });
                 return 'Email required';
-              }
-              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+              } else if (!RegExp(pattern, caseSensitive: false)
+                  .hasMatch(value)) {
                 return 'Invalid email';
               }
               setState(() {
@@ -135,9 +142,14 @@ class _NewSignupFormState extends State<NewSignupForm> {
             autocorrect: false,
             decoration: InputDecoration(
                 hintText: 'Password',
+                errorMaxLines: 2,
                 hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 16.0,
                       color: Colors.grey[600],
+                    ),
+                errorStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 14.0,
+                      color: Colors.redAccent,
                     ),
                 enabledBorder: _buildOutlineInputBorder(
                     color: Colors.grey.withOpacity(0.5)),
@@ -179,18 +191,28 @@ class _NewSignupFormState extends State<NewSignupForm> {
                       ),
                   ],
                 )),
+
             validator: (String? value) {
+              String pattern =
+                  r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{6,}$';
+
               if (value == null || value.isEmpty) {
                 setState(() {
                   _isPasswordError = true;
                 });
                 return 'Password required';
+              } else if (!RegExp(pattern).hasMatch(value)) {
+                setState(() {
+                  _isPasswordError = true;
+                });
+                return 'Password too weak: minimum 6 characters, 1 uppercase letter, 1 lowercase letter, 1 special character and 1 digit.';
               }
               setState(() {
                 _isPasswordError = false;
               });
               return null;
             },
+            // obscureText: true,
           ),
           const SizedBox(
             height: 15.0,
@@ -219,6 +241,10 @@ class _NewSignupFormState extends State<NewSignupForm> {
                 hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 16.0,
                       color: Colors.grey[600],
+                    ),
+                errorStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 14.0,
+                      color: Colors.redAccent,
                     ),
                 enabledBorder: _buildOutlineInputBorder(
                     color: Colors.grey.withOpacity(0.5)),
@@ -266,6 +292,12 @@ class _NewSignupFormState extends State<NewSignupForm> {
                   _isConfirmError = true;
                 });
                 return 'Confirm Password required';
+              } else if (_passwordController.text !=
+                  _confirmPasswordController.text) {
+                setState(() {
+                  _isConfirmError = true;
+                });
+                return 'Confirm password not match';
               }
               setState(() {
                 _isConfirmError = false;
@@ -392,18 +424,14 @@ class _NewSignupFormState extends State<NewSignupForm> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                // Validate will return true if the form is valid, or false if
-                // the form is invalid.
                 if (_formKey.currentState!.validate()) {
-                  // Process data.
                   print('Ok');
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Colors.indigo[600], // Set the background color here
-                foregroundColor: Colors.white, // Set the text color here
-                elevation: 0, // Adjust shadow
+                backgroundColor: Colors.indigo[600],
+                foregroundColor: Colors.white,
+                elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),

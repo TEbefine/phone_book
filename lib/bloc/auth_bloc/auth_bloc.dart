@@ -10,14 +10,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository userRepository;
 
   AuthBloc({required this.userRepository}) : super(AuthInitial()) {
-    on<AuthLoginRequested>(_onLoginRequested);
+    on<AuthSignInRequested>(_onLoginRequested);
     on<AuthCheckRequested>(_onCheckRequested);
     on<AuthLogoutRequested>(_onSignedOut);
     add(AuthCheckRequested());
   }
 
   Future<void> _onLoginRequested(
-      AuthLoginRequested event, Emitter<AuthState> emit) async {
+      AuthSignInRequested event, Emitter<AuthState> emit) async {
     String? emailError;
     String? passwordError;
 

@@ -215,7 +215,7 @@ class _SigninFormState extends State<SigninForm> {
               width: double.infinity, // Makes the button full width
               child: ElevatedButton(
                 onPressed: () {
-                  context.read<AuthBloc>().add(AuthLoginRequested(
+                  context.read<AuthBloc>().add(AuthSignInRequested(
                       email: _emailController.text,
                       password: _passwordController.text));
                 },
