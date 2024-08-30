@@ -104,22 +104,11 @@ class PopupPayment extends StatelessWidget {
                               text: TextSpan(
                                 text:
                                     'By connecting a wallet,you agree to InFlux Technology Limited ',
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  fontFamily: 'Inter',
-                                  color: Colors.black.withOpacity(0.5),
-                                ),
+                                style: policyTextStyle(link: false),
                                 children: [
                                   TextSpan(
                                     text: 'Terms of Service',
-                                    style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontFamily: 'Inter',
-                                      color: Colors.black.withOpacity(0.5),
-                                      decoration: TextDecoration.underline,
-                                      decorationColor:
-                                          Colors.black.withOpacity(0.5),
-                                    ),
+                                    style: policyTextStyle(link: true),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () async {
                                         final Uri url = Uri.parse(
@@ -133,22 +122,11 @@ class PopupPayment extends StatelessWidget {
                                   ),
                                   TextSpan(
                                     text: ' and consent to its ',
-                                    style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontFamily: 'Inter',
-                                      color: Colors.black.withOpacity(0.5),
-                                    ),
+                                    style: policyTextStyle(link: false),
                                   ),
                                   TextSpan(
                                       text: 'Privacy Policy',
-                                      style: TextStyle(
-                                        fontSize: 13.0,
-                                        fontFamily: 'Inter',
-                                        color: Colors.black.withOpacity(0.5),
-                                        decoration: TextDecoration.underline,
-                                        decorationColor:
-                                            Colors.black.withOpacity(0.5),
-                                      ),
+                                      style: policyTextStyle(link: true),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () async {
                                           final Uri url = Uri.parse(
@@ -217,6 +195,21 @@ class PopupPayment extends StatelessWidget {
       fontSize: 15.8,
       height: 1.3125,
       color: Color.fromRGBO(48, 59, 82, 1),
+    );
+  }
+
+  TextStyle policyTextStyle({bool link = false}) {
+    TextStyle baseStyle = const TextStyle(
+      fontFamily: 'Montserrat',
+      fontWeight: FontWeight.bold,
+      fontSize: 12,
+      height: 1.6667,
+      color: Color.fromRGBO(112, 122, 138, 0.8),
+    );
+
+    return baseStyle.copyWith(
+      decoration: link ? TextDecoration.underline : TextDecoration.none,
+      decorationColor: link ? const Color.fromRGBO(112, 122, 138, 0.8) : null,
     );
   }
 }
