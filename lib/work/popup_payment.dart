@@ -193,9 +193,9 @@ class PopupPayment extends StatelessWidget {
       fontWeight: FontWeight.bold,
       fontSize: 12,
       height: 1.6667,
-      color: const Color.fromRGBO(112, 122, 138, 1),
+      color: const Color.fromRGBO(112, 122, 138, 0.7),
       decoration: link ? TextDecoration.underline : TextDecoration.none,
-      decorationColor: link ? const Color.fromRGBO(112, 122, 138, 0.8) : null,
+      decorationColor: link ? const Color.fromRGBO(112, 122, 138, 0.7) : null,
     );
   }
 
