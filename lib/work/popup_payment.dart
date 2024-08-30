@@ -1,8 +1,6 @@
-import 'dart:html' as html;
-// import 'dart:js' as js;
+import 'package:web/web.dart' as web;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// import 'package:url_launcher/url_launcher.dart';
 
 class PopupPayment extends StatelessWidget {
   const PopupPayment({super.key});
@@ -209,19 +207,14 @@ class PopupPayment extends StatelessWidget {
       text: text,
       style: _policyTextStyle(link: true),
       recognizer: TapGestureRecognizer()
-        ..onTap = () async {
-          html.window.open(url, '_blank');
-          // js.context.callMethod('sayHi', [text]);
+        ..onTap = () {
+          final script = web.HTMLScriptElement()
+            ..text = 'redirectToURL("$url");';
+
+          web.document.body!.append(script);
+
+          web.document.body!.removeChild(script);
         },
-      // recognizer: TapGestureRecognizer()
-      //   ..onTap = () async {
-      //     final Uri uri = Uri.parse(url);
-      //     if (await canLaunchUrl(uri)) {
-      //       await launchUrl(uri);
-      //     } else {
-      //       throw 'Could not launch $uri';
-      //     }
-      //   },
     );
   }
 }
