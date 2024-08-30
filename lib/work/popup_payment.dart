@@ -56,43 +56,48 @@ class PopupPayment extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {},
-                          style: walletBoxStyle(),
-                          child: walletRow(
-                              'images/zelcore_wallet.png', 'Zelcore Wallet'),
+                          style: _walletBoxStyle(),
+                          child: _walletRow(
+                              imgURL: 'images/zelcore_wallet.png',
+                              text: 'Zelcore Wallet'),
                         ),
                         const SizedBox(
                           height: 16.0,
                         ),
                         TextButton(
                           onPressed: () {},
-                          style: walletBoxStyle(),
-                          child:
-                              walletRow('images/ssp_wallet.png', 'SSP Wallet'),
+                          style: _walletBoxStyle(),
+                          child: _walletRow(
+                              imgURL: 'images/ssp_wallet.png',
+                              text: 'SSP Wallet'),
                         ),
                         const SizedBox(
                           height: 16.0,
                         ),
                         TextButton(
                           onPressed: () {},
-                          style: walletBoxStyle(),
-                          child: walletRow('images/metamask.png', 'MetaMask'),
+                          style: _walletBoxStyle(),
+                          child: _walletRow(
+                              imgURL: 'images/metamask.png', text: 'MetaMask'),
                         ),
                         const SizedBox(
                           height: 16.0,
                         ),
                         TextButton(
                             onPressed: () {},
-                            style: walletBoxStyle(),
-                            child: walletRow(
-                                'images/walletconnect.png', 'WalletConnect')),
+                            style: _walletBoxStyle(),
+                            child: _walletRow(
+                                imgURL: 'images/walletconnect.png',
+                                text: 'WalletConnect')),
                         const SizedBox(
                           height: 16.0,
                         ),
                         TextButton(
                           onPressed: () {},
-                          style: walletBoxStyle(),
-                          child: walletRow(
-                              'images/coinbase_wallet.png', 'Coinbase Wallet'),
+                          style: _walletBoxStyle(),
+                          child: _walletRow(
+                              imgURL: 'images/coinbase_wallet.png',
+                              text: 'Coinbase Wallet'),
                         ),
                         const SizedBox(
                           height: 16.0,
@@ -104,39 +109,20 @@ class PopupPayment extends StatelessWidget {
                               text: TextSpan(
                                 text:
                                     'By connecting a wallet,you agree to InFlux Technology Limited ',
-                                style: policyTextStyle(link: false),
+                                style: _policyTextStyle(link: false),
                                 children: [
-                                  TextSpan(
+                                  _buildLinkTextSpan(
                                     text: 'Terms of Service',
-                                    style: policyTextStyle(link: true),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () async {
-                                        final Uri url = Uri.parse(
-                                            'https://uniswap.org/terms-of-service');
-                                        if (await canLaunchUrl(url)) {
-                                          await launchUrl(url);
-                                        } else {
-                                          throw 'Could not launch $url';
-                                        }
-                                      },
+                                    url: 'https://uniswap.org/terms-of-service',
                                   ),
                                   TextSpan(
                                     text: ' and consent to its ',
-                                    style: policyTextStyle(link: false),
+                                    style: _policyTextStyle(link: false),
                                   ),
-                                  TextSpan(
-                                      text: 'Privacy Policy',
-                                      style: policyTextStyle(link: true),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () async {
-                                          final Uri url = Uri.parse(
-                                              'https://uniswap.org/privacy-policy');
-                                          if (await canLaunchUrl(url)) {
-                                            await launchUrl(url);
-                                          } else {
-                                            throw 'Could not launch $url';
-                                          }
-                                        }),
+                                  _buildLinkTextSpan(
+                                    text: 'Privacy Policy',
+                                    url: 'https://uniswap.org/privacy-policy',
+                                  ),
                                   const TextSpan(text: '.')
                                 ],
                               ),
@@ -156,7 +142,7 @@ class PopupPayment extends StatelessWidget {
     );
   }
 
-  ButtonStyle walletBoxStyle() {
+  ButtonStyle _walletBoxStyle() {
     return TextButton.styleFrom(
       backgroundColor: Colors.white,
       minimumSize: const Size(352, 64),
@@ -171,24 +157,27 @@ class PopupPayment extends StatelessWidget {
     );
   }
 
-  Row walletRow(String url, String text) {
+  Row _walletRow({
+    required String imgURL,
+    required String text,
+  }) {
     return Row(
       children: [
         Image.asset(
-          url,
+          imgURL,
           width: 40.0,
           height: 40.0,
         ),
         const SizedBox(width: 15.0),
         Text(
           text,
-          style: dialogTextStyle(),
+          style: _dialogTextStyle(),
         ),
       ],
     );
   }
 
-  TextStyle dialogTextStyle() {
+  TextStyle _dialogTextStyle() {
     return const TextStyle(
       fontFamily: 'Montserrat',
       fontWeight: FontWeight.w300,
@@ -198,18 +187,34 @@ class PopupPayment extends StatelessWidget {
     );
   }
 
-  TextStyle policyTextStyle({bool link = false}) {
-    TextStyle baseStyle = const TextStyle(
+  TextStyle _policyTextStyle({required bool link}) {
+    return TextStyle(
       fontFamily: 'Montserrat',
       fontWeight: FontWeight.bold,
       fontSize: 12,
       height: 1.6667,
-      color: Color.fromRGBO(112, 122, 138, 0.8),
-    );
-
-    return baseStyle.copyWith(
+      color: const Color.fromRGBO(112, 122, 138, 1),
       decoration: link ? TextDecoration.underline : TextDecoration.none,
       decorationColor: link ? const Color.fromRGBO(112, 122, 138, 0.8) : null,
+    );
+  }
+
+  TextSpan _buildLinkTextSpan({
+    required String text,
+    required String url,
+  }) {
+    return TextSpan(
+      text: text,
+      style: _policyTextStyle(link: true),
+      recognizer: TapGestureRecognizer()
+        ..onTap = () async {
+          final Uri uri = Uri.parse(url);
+          if (await canLaunchUrl(uri)) {
+            await launchUrl(uri);
+          } else {
+            throw 'Could not launch $uri';
+          }
+        },
     );
   }
 }
