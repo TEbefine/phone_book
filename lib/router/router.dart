@@ -7,6 +7,8 @@ import 'package:phone_book/screens/account.dart';
 import 'package:phone_book/screens/new_login.dart';
 import 'package:phone_book/work/popup_payment.dart';
 
+import '../screens/new_homepage.dart';
+
 final GoRouter router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
@@ -44,6 +46,11 @@ final GoRouter router = GoRouter(
       path: '/payment',
       builder: (BuildContext context, GoRouterState state) =>
           const PopupPayment(),
+    ),
+    GoRoute(
+      path: '/nav',
+      builder: (BuildContext context, GoRouterState state) =>
+          const NavigationRailExample(),
     ),
   ],
 );
