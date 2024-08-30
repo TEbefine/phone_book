@@ -86,16 +86,18 @@ flutter:
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+          weight: 300
         - asset: assets/fonts/Montserrat-Bold.ttf
           weight: 600
 
   assets:
     - assets/images/honeycomb.png
-    - images/zelcore_wallet.png
-    - images/metamask_wallet.png
-    - images/walletconnect.png
-    - images/coinbase_wallet.png
-    - images/ssp_wallet.png
+    - assets/images/zelcore_wallet.png
+    - assets/images/metamask.png
+    - assets/images/walletconnect.png
+    - assets/images/coinbase_wallet.png
+    - assets/images/ssp_wallet.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
