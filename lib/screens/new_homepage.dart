@@ -3,7 +3,9 @@ import 'package:phone_book/screens/new_nav_homepage/head_nav_homepage.dart';
 import 'package:phone_book/screens/new_nav_homepage/nav_button.dart';
 import 'package:phone_book/work/first_test_data_table.dart';
 import 'package:phone_book/work/sec_test_data_table.dart';
+import 'package:phone_book/work/third_test_data_table.dart';
 import 'package:phone_book/work/try_sec_test_data_table.dart';
+import 'package:phone_book/work/try_third_data_table.dart';
 
 class NavigationRailExample extends StatefulWidget {
   const NavigationRailExample({super.key});
@@ -49,15 +51,18 @@ class _NavigationRailExampleState extends State<NavigationRailExample> {
               ),
             ),
             const Expanded(
-              child: Column(
-                mainAxisAlignment:
-                    MainAxisAlignment.center, // Centers vertically
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  FirstTestDataTable(),
-                  SecTestDataTable(),
-                  TrySecTestDataTable()
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center, // Centers vertically
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    FirstTestDataTable(),
+                    SecTestDataTable(),
+                    TrySecTestDataTable(),
+                    TryThirdDataTable(),
+                  ],
+                ),
               ),
             )
           ],
